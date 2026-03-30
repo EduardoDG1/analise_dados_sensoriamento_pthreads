@@ -3,7 +3,7 @@
 
 #include  "structs.h"
 
-SENSORSDATA **loadJson(const char *fileName, int *countItems);
+SENSORSDATA *loadJson(const char *fileName, int *countItems);
 void *processJsonData(void *);
 
 #endif
