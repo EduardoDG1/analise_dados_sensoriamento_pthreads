@@ -88,12 +88,11 @@ SENSORSDATA *loadJson(const char *fileName, int *countItems)
         if(sensorsDataArray == NULL)
         {
             sensorsDataArray = (SENSORSDATA *)malloc(sizeof(SENSORSDATA));
-            sensorsDataArray[(*countItems)++] = sensorsData;
         }
         else{
             sensorsDataArray = (SENSORSDATA*)realloc(sensorsDataArray,sizeof(SENSORSDATA)*((*countItems)+1));
-            sensorsDataArray[(*countItems)++] = sensorsData;
         }
+        sensorsDataArray[(*countItems)++] = sensorsData;
         fscanf(f, "],");
     }
 
