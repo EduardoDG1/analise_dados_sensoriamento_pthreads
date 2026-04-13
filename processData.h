@@ -1,9 +1,14 @@
 #ifndef PROCESSDATA_H
 #define PROCESSDATA_H
 
-#include  "structs.h"
+#include  "cJSON.h"
 
-SENSORSDATA *loadJson(const char *fileName, int *countItems);
-void *processJsonData(void *);
+typedef struct processData
+{
+    char *nomeArquivo;
+    cJSON *json;
+}ARGSCARREGARJSON;
+
+void *carregarJson(void *carregarJson);
 
 #endif
