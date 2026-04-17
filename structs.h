@@ -7,6 +7,17 @@
 
 #include  "cJSON.h"
 
+typedef struct structs
+{
+    int dia;
+    int mes;
+    int ano;
+    int hora;
+    int minuto;
+    int segundo;
+}DATAHORA;
+
+
 typedef struct
 {
     double maxima;
@@ -91,5 +102,19 @@ typedef struct
     cJSON *json;
 }ARGSCARREGARJSON;
 
+typedef struct
+{
+    char *arquivo1;
+    int nItensArquivo1;
+    DATAHORA periodoInicioArquivo1;
+    DATAHORA periodoFimArquivo1;
+    char*arquivo2;
+    int nItensArquivo2;
+    DATAHORA periodoInicioArquivo2;
+    DATAHORA periodoFimArquivo2;
+    float tempo;
+    ESTATISTICASCAXIAS estatisticasCaxias;
+    ESTATISTICASBENTO estatisticasBento;
+}ARGSIMPRIMIRDADOS;
 
 #endif

@@ -4,5 +4,8 @@
 void *carregarJson(void *args);
 void *processarJson(void *args);
 void *processarJsonMqtt(void *args);
+ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCaxias1, ESTATISTICASCAXIAS estatisticasCaxias2);
+ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1, ESTATISTICASBENTO estatisticasBento2);
+void imprimirInformacoesNaTela(ARGSIMPRIMIRDADOS argsImprimirDados);
 
 #endif

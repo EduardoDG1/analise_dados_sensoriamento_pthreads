@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <time.h>
 #include <limits.h>
+#include <string.h>
 
 #include "structs.h"
 #include "processData.h"
+
+//Implementar função de gera logs
 
 int main(){
     clock_t tempo = clock();
@@ -11,10 +14,10 @@ int main(){
     ARGSCARREGARJSON parametrosCarregarJson = {"senzemo_cx_bg.json"};
     ARGSCARREGARJSON parametrosCarregarJsonMqtt = {"mqtt_senzemo_cx_bg.json"};
     
-    //Executar em threads
+    //Leitura dos arquivos (paralelizar)
     carregarJson((void *)&parametrosCarregarJson);
     carregarJson((void *)&parametrosCarregarJsonMqtt);
-    
+
     DADOSTEMPERATURA dadosTemperatura;
     dadosTemperatura.media = 0;
     dadosTemperatura.maxima = INT_MIN;
@@ -53,7 +56,7 @@ int main(){
     estatisticasBento.dadosSpreadingFactors = dadosSpreadingFactors;
     estatisticasBento.numeroRegistros = 0;
 
-    //Executar em threads
+    //Calcular estatisticas (paralelizar)
     ARGSPROCESSARJSON parametrosProcessarJson;
     parametrosProcessarJson.json = parametrosCarregarJson.json; 
     parametrosProcessarJson.estatisticasCaxias = estatisticasCaxias;
@@ -68,8 +71,36 @@ int main(){
 
     processarJsonMqtt((void*)&parametrosProcessarJsonMqtt);
 
-    double seconds = (double)(clock()-tempo)/CLOCKS_PER_SEC;
-    printf("%lfs\n",seconds);
+    //Finalização de cálculo de estatisticas
+    ESTATISTICASCAXIAS estatisticasCaxiasFinal = calcularEstatisticasCaxias(parametrosProcessarJson.estatisticasCaxias, parametrosProcessarJsonMqtt.estatisticasCaxias);
+    ESTATISTICASBENTO estatisticasBentoFinal = calcularEstatisticasBento(parametrosProcessarJson.estatisticasBento, parametrosProcessarJsonMqtt.estatisticasBento);
+
+    float segundos = (float)(clock()-tempo)/CLOCKS_PER_SEC;
+
+    DATAHORA dataInicioArquivo1, dataFimArquivo1, dataInicioArquivo2,dataFimArquivo2;
+
+    sscanf(parametrosProcessarJson.periodoInicio, "%d-%d-%d", &dataInicioArquivo1.ano, &dataInicioArquivo1.mes, &dataInicioArquivo1.dia);
+    sscanf(parametrosProcessarJson.periodoFim, "%d-%d-%d", &dataFimArquivo1.ano, &dataFimArquivo1.mes, &dataFimArquivo1.dia);
+
+    sscanf(parametrosProcessarJsonMqtt.periodoInicio, "%d-%d-%d", &dataInicioArquivo2.ano, &dataInicioArquivo2.mes, &dataInicioArquivo2.dia);
+    sscanf(parametrosProcessarJsonMqtt.periodoFim, "%d-%d-%d", &dataFimArquivo2.ano, &dataFimArquivo2.mes, &dataFimArquivo2.dia);
+
+    ARGSIMPRIMIRDADOS argsImprimirDados = {
+        "senzemo_cx_bg.json", 
+        parametrosProcessarJson.estatisticasCaxias.numeroRegistros+parametrosProcessarJson.estatisticasBento.numeroRegistros,
+        dataInicioArquivo1,
+        dataFimArquivo1,
+        "mqtt_senzemo_cx_bg.json", 
+        parametrosProcessarJsonMqtt.estatisticasCaxias.numeroRegistros+parametrosProcessarJsonMqtt.estatisticasBento.numeroRegistros,
+        dataInicioArquivo2,
+        dataFimArquivo2,
+        segundos,
+        estatisticasCaxiasFinal, 
+        estatisticasBentoFinal
+    };
+
+    //Impressão dos dados na tela
+    imprimirInformacoesNaTela(argsImprimirDados);
 
     return 0;
 }
