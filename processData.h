@@ -7,5 +7,6 @@ void *processarJsonMqtt(void *args);
 ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCaxias1, ESTATISTICASCAXIAS estatisticasCaxias2);
 ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1, ESTATISTICASBENTO estatisticasBento2);
 void imprimirInformacoesNaTela(ARGSIMPRIMIRDADOS argsImprimirDados);
-
+void *threadLog(void *args);
+void log_push(LogQueue *lq, const char *mensagem);
 #endif

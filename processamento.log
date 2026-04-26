@@ -1,0 +1,970 @@
+[CALCULADORA 1] Thread iniciada
+[LEITORA] Thread iniciada: mqtt_senzemo_cx_bg.json
+[LEITORA] Thread iniciada: senzemo_cx_bg.json
+[CALCULADORA 2] Thread iniciada
+[LEITORA] mqtt_senzemo_cx_bg.json - 100/5055 registros lidos
+[CALCULADORA 2] 100/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 200/5055 registros lidos
+[CALCULADORA 2] 200/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 300/5055 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 400/5055 registros lidos
+[CALCULADORA 2] 300/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 500/5055 registros lidos
+[CALCULADORA 2] 400/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 600/5055 registros lidos
+[CALCULADORA 2] 500/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 700/5055 registros lidos
+[CALCULADORA 2] 600/5055 registros processados
+[CALCULADORA 2] 700/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 800/5055 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 900/5055 registros lidos
+[CALCULADORA 2] 800/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1000/5055 registros lidos
+[CALCULADORA 2] 900/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1100/5055 registros lidos
+[CALCULADORA 2] 1000/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1200/5055 registros lidos
+[CALCULADORA 2] 1100/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1300/5055 registros lidos
+[CALCULADORA 2] 1200/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1400/5055 registros lidos
+[CALCULADORA 2] 1300/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1500/5055 registros lidos
+[CALCULADORA 2] 1400/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1600/5055 registros lidos
+[CALCULADORA 2] 1500/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1700/5055 registros lidos
+[CALCULADORA 2] 1600/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1800/5055 registros lidos
+[CALCULADORA 2] 1700/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 1900/5055 registros lidos
+[CALCULADORA 2] 1800/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2000/5055 registros lidos
+[CALCULADORA 2] 1900/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2100/5055 registros lidos
+[CALCULADORA 2] 2000/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2200/5055 registros lidos
+[CALCULADORA 2] 2100/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2300/5055 registros lidos
+[CALCULADORA 2] 2200/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2400/5055 registros lidos
+[CALCULADORA 2] 2300/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2500/5055 registros lidos
+[CALCULADORA 2] 2400/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2600/5055 registros lidos
+[CALCULADORA 2] 2500/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2700/5055 registros lidos
+[CALCULADORA 2] 2600/5055 registros processados
+[LEITORA] senzemo_cx_bg.json - 100/43191 registros lidos
+[CALCULADORA 2] 2700/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2800/5055 registros lidos
+[CALCULADORA 1] 100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 200/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 300/43191 registros lidos
+[CALCULADORA 1] 200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 400/43191 registros lidos
+[CALCULADORA 1] 300/43191 registros processados
+[CALCULADORA 2] 2800/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 2900/5055 registros lidos
+[CALCULADORA 1] 400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 500/43191 registros lidos
+[CALCULADORA 1] 500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 600/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 700/43191 registros lidos
+[CALCULADORA 1] 600/43191 registros processados
+[CALCULADORA 2] 2900/5055 registros processados
+[CALCULADORA 1] 700/43191 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3000/5055 registros lidos
+[LEITORA] senzemo_cx_bg.json - 800/43191 registros lidos
+[CALCULADORA 1] 800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 900/43191 registros lidos
+[CALCULADORA 1] 900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 1100/43191 registros lidos
+[CALCULADORA 2] 3000/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3100/5055 registros lidos
+[CALCULADORA 1] 1000/43191 registros processados
+[CALCULADORA 1] 1100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1200/43191 registros lidos
+[CALCULADORA 1] 1200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1300/43191 registros lidos
+[CALCULADORA 1] 1300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1400/43191 registros lidos
+[CALCULADORA 1] 1400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1500/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 3200/5055 registros lidos
+[CALCULADORA 2] 3100/5055 registros processados
+[CALCULADORA 1] 1500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1600/43191 registros lidos
+[CALCULADORA 1] 1600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1700/43191 registros lidos
+[CALCULADORA 1] 1700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1800/43191 registros lidos
+[CALCULADORA 1] 1800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 1900/43191 registros lidos
+[CALCULADORA 1] 1900/43191 registros processados
+[CALCULADORA 2] 3200/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3300/5055 registros lidos
+[LEITORA] senzemo_cx_bg.json - 2000/43191 registros lidos
+[CALCULADORA 1] 2000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2100/43191 registros lidos
+[CALCULADORA 1] 2100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2200/43191 registros lidos
+[CALCULADORA 1] 2200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2300/43191 registros lidos
+[CALCULADORA 1] 2300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2400/43191 registros lidos
+[CALCULADORA 2] 3300/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3400/5055 registros lidos
+[CALCULADORA 1] 2400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2500/43191 registros lidos
+[CALCULADORA 1] 2500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2600/43191 registros lidos
+[CALCULADORA 1] 2600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2700/43191 registros lidos
+[CALCULADORA 1] 2700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2800/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 3500/5055 registros lidos
+[CALCULADORA 2] 3400/5055 registros processados
+[CALCULADORA 1] 2800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 2900/43191 registros lidos
+[CALCULADORA 1] 2900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3000/43191 registros lidos
+[CALCULADORA 1] 3000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3100/43191 registros lidos
+[CALCULADORA 1] 3100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3200/43191 registros lidos
+[CALCULADORA 2] 3500/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3600/5055 registros lidos
+[CALCULADORA 1] 3200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3300/43191 registros lidos
+[CALCULADORA 1] 3300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3400/43191 registros lidos
+[CALCULADORA 1] 3400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3500/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 3700/5055 registros lidos
+[CALCULADORA 2] 3600/5055 registros processados
+[CALCULADORA 1] 3500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3600/43191 registros lidos
+[CALCULADORA 1] 3600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 3800/43191 registros lidos
+[CALCULADORA 1] 3700/43191 registros processados
+[CALCULADORA 1] 3800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 3900/43191 registros lidos
+[CALCULADORA 1] 3900/43191 registros processados
+[CALCULADORA 2] 3700/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3800/5055 registros lidos
+[LEITORA] senzemo_cx_bg.json - 4000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 4100/43191 registros lidos
+[CALCULADORA 1] 4000/43191 registros processados
+[CALCULADORA 1] 4100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4200/43191 registros lidos
+[CALCULADORA 1] 4200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4300/43191 registros lidos
+[CALCULADORA 2] 3800/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 3900/5055 registros lidos
+[CALCULADORA 1] 4300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4400/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 4000/5055 registros lidos
+[CALCULADORA 2] 3900/5055 registros processados
+[CALCULADORA 1] 4400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4500/43191 registros lidos
+[CALCULADORA 1] 4500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4600/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 4700/43191 registros lidos
+[CALCULADORA 1] 4600/43191 registros processados
+[CALCULADORA 1] 4700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4800/43191 registros lidos
+[CALCULADORA 1] 4800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 4900/43191 registros lidos
+[CALCULADORA 2] 4000/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 4100/5055 registros lidos
+[CALCULADORA 1] 4900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 5100/43191 registros lidos
+[CALCULADORA 1] 5000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5200/43191 registros lidos
+[CALCULADORA 1] 5100/43191 registros processados
+[CALCULADORA 1] 5200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5300/43191 registros lidos
+[CALCULADORA 1] 5300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5400/43191 registros lidos
+[CALCULADORA 1] 5400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5500/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 4200/5055 registros lidos
+[CALCULADORA 2] 4100/5055 registros processados
+[CALCULADORA 1] 5500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5600/43191 registros lidos
+[CALCULADORA 1] 5600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5700/43191 registros lidos
+[CALCULADORA 1] 5700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5800/43191 registros lidos
+[CALCULADORA 1] 5800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 5900/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 4300/5055 registros lidos
+[CALCULADORA 2] 4200/5055 registros processados
+[CALCULADORA 1] 5900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6000/43191 registros lidos
+[CALCULADORA 1] 6000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6100/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 4400/5055 registros lidos
+[CALCULADORA 2] 4300/5055 registros processados
+[CALCULADORA 1] 6100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6200/43191 registros lidos
+[CALCULADORA 1] 6200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6300/43191 registros lidos
+[CALCULADORA 1] 6300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6400/43191 registros lidos
+[CALCULADORA 1] 6400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6500/43191 registros lidos
+[CALCULADORA 1] 6500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6600/43191 registros lidos
+[CALCULADORA 1] 6600/43191 registros processados
+[CALCULADORA 2] 4400/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 4500/5055 registros lidos
+[LEITORA] senzemo_cx_bg.json - 6700/43191 registros lidos
+[CALCULADORA 1] 6700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6800/43191 registros lidos
+[CALCULADORA 1] 6800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 6900/43191 registros lidos
+[CALCULADORA 1] 6900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7000/43191 registros lidos
+[CALCULADORA 1] 7000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7100/43191 registros lidos
+[LEITORA] mqtt_senzemo_cx_bg.json - 4600/5055 registros lidos
+[CALCULADORA 2] 4500/5055 registros processados
+[CALCULADORA 1] 7100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7200/43191 registros lidos
+[CALCULADORA 1] 7200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7300/43191 registros lidos
+[CALCULADORA 1] 7300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7400/43191 registros lidos
+[CALCULADORA 1] 7400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7500/43191 registros lidos
+[CALCULADORA 1] 7500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7600/43191 registros lidos
+[CALCULADORA 2] 4600/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 4700/5055 registros lidos
+[CALCULADORA 1] 7600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7700/43191 registros lidos
+[CALCULADORA 1] 7700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7800/43191 registros lidos
+[CALCULADORA 1] 7800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 7900/43191 registros lidos
+[CALCULADORA 1] 7900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8000/43191 registros lidos
+[CALCULADORA 1] 8000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8100/43191 registros lidos
+[CALCULADORA 2] 4700/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 4800/5055 registros lidos
+[CALCULADORA 1] 8100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8200/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 8300/43191 registros lidos
+[CALCULADORA 1] 8200/43191 registros processados
+[CALCULADORA 1] 8300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8400/43191 registros lidos
+[CALCULADORA 2] 4800/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 4900/5055 registros lidos
+[CALCULADORA 1] 8400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 8600/43191 registros lidos
+[CALCULADORA 1] 8500/43191 registros processados
+[CALCULADORA 1] 8600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8700/43191 registros lidos
+[CALCULADORA 1] 8700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 8800/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 8900/43191 registros lidos
+[CALCULADORA 1] 8800/43191 registros processados
+[CALCULADORA 2] 4900/5055 registros processados
+[LEITORA] mqtt_senzemo_cx_bg.json - 5000/5055 registros lidos
+[CALCULADORA 1] 8900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9000/43191 registros lidos
+[CALCULADORA 1] 9000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 9200/43191 registros lidos
+[CALCULADORA 1] 9100/43191 registros processados
+[CALCULADORA 1] 9200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9300/43191 registros lidos
+[CALCULADORA 1] 9300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9400/43191 registros lidos
+[CALCULADORA 2] 5000/5055 registros processados
+[CALCULADORA 1] 9400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9500/43191 registros lidos
+[CALCULADORA 1] 9500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9600/43191 registros lidos
+[CALCULADORA 1] 9600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9700/43191 registros lidos
+[LEITORA] Thread finalizada: mqtt_senzemo_cx_bg.json - 5055 registros lidos
+[CALCULADORA 2] Thread finalizada - 5055 registros processados
+[CALCULADORA 1] 9700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9800/43191 registros lidos
+[CALCULADORA 1] 9800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 9900/43191 registros lidos
+[CALCULADORA 1] 9900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 10100/43191 registros lidos
+[CALCULADORA 1] 10000/43191 registros processados
+[CALCULADORA 1] 10100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10200/43191 registros lidos
+[CALCULADORA 1] 10200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10300/43191 registros lidos
+[CALCULADORA 1] 10300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10400/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 10500/43191 registros lidos
+[CALCULADORA 1] 10400/43191 registros processados
+[CALCULADORA 1] 10500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10600/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 10700/43191 registros lidos
+[CALCULADORA 1] 10600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10800/43191 registros lidos
+[CALCULADORA 1] 10700/43191 registros processados
+[CALCULADORA 1] 10800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 10900/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 11000/43191 registros lidos
+[CALCULADORA 1] 10900/43191 registros processados
+[CALCULADORA 1] 11000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 11100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 11200/43191 registros lidos
+[CALCULADORA 1] 11100/43191 registros processados
+[CALCULADORA 1] 11200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 11300/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 11400/43191 registros lidos
+[CALCULADORA 1] 11300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 11500/43191 registros lidos
+[CALCULADORA 1] 11400/43191 registros processados
+[CALCULADORA 1] 11500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 11600/43191 registros lidos
+[CALCULADORA 1] 11600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 11700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 11800/43191 registros lidos
+[CALCULADORA 1] 11700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 11900/43191 registros lidos
+[CALCULADORA 1] 11800/43191 registros processados
+[CALCULADORA 1] 11900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 12100/43191 registros lidos
+[CALCULADORA 1] 12000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12200/43191 registros lidos
+[CALCULADORA 1] 12100/43191 registros processados
+[CALCULADORA 1] 12200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12300/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 12400/43191 registros lidos
+[CALCULADORA 1] 12300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12500/43191 registros lidos
+[CALCULADORA 1] 12400/43191 registros processados
+[CALCULADORA 1] 12500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12600/43191 registros lidos
+[CALCULADORA 1] 12600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 12800/43191 registros lidos
+[CALCULADORA 1] 12700/43191 registros processados
+[CALCULADORA 1] 12800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 12900/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 13000/43191 registros lidos
+[CALCULADORA 1] 12900/43191 registros processados
+[CALCULADORA 1] 13000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 13200/43191 registros lidos
+[CALCULADORA 1] 13100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13300/43191 registros lidos
+[CALCULADORA 1] 13200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13400/43191 registros lidos
+[CALCULADORA 1] 13300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13500/43191 registros lidos
+[CALCULADORA 1] 13400/43191 registros processados
+[CALCULADORA 1] 13500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13600/43191 registros lidos
+[CALCULADORA 1] 13600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 13800/43191 registros lidos
+[CALCULADORA 1] 13700/43191 registros processados
+[CALCULADORA 1] 13800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 13900/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 14000/43191 registros lidos
+[CALCULADORA 1] 13900/43191 registros processados
+[CALCULADORA 1] 14000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 14200/43191 registros lidos
+[CALCULADORA 1] 14100/43191 registros processados
+[CALCULADORA 1] 14200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14300/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 14400/43191 registros lidos
+[CALCULADORA 1] 14300/43191 registros processados
+[CALCULADORA 1] 14400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14500/43191 registros lidos
+[CALCULADORA 1] 14500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14600/43191 registros lidos
+[CALCULADORA 1] 14600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14700/43191 registros lidos
+[CALCULADORA 1] 14700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14800/43191 registros lidos
+[CALCULADORA 1] 14800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 14900/43191 registros lidos
+[CALCULADORA 1] 14900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15000/43191 registros lidos
+[CALCULADORA 1] 15000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15100/43191 registros lidos
+[CALCULADORA 1] 15100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15200/43191 registros lidos
+[CALCULADORA 1] 15200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15300/43191 registros lidos
+[CALCULADORA 1] 15300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15400/43191 registros lidos
+[CALCULADORA 1] 15400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 15600/43191 registros lidos
+[CALCULADORA 1] 15500/43191 registros processados
+[CALCULADORA 1] 15600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15700/43191 registros lidos
+[CALCULADORA 1] 15700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15800/43191 registros lidos
+[CALCULADORA 1] 15800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 15900/43191 registros lidos
+[CALCULADORA 1] 15900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16000/43191 registros lidos
+[CALCULADORA 1] 16000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16100/43191 registros lidos
+[CALCULADORA 1] 16100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16200/43191 registros lidos
+[CALCULADORA 1] 16200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16300/43191 registros lidos
+[CALCULADORA 1] 16300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16400/43191 registros lidos
+[CALCULADORA 1] 16400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16500/43191 registros lidos
+[CALCULADORA 1] 16500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16600/43191 registros lidos
+[CALCULADORA 1] 16600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16700/43191 registros lidos
+[CALCULADORA 1] 16700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16800/43191 registros lidos
+[CALCULADORA 1] 16800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 16900/43191 registros lidos
+[CALCULADORA 1] 16900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17000/43191 registros lidos
+[CALCULADORA 1] 17000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17100/43191 registros lidos
+[CALCULADORA 1] 17100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17200/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 17300/43191 registros lidos
+[CALCULADORA 1] 17200/43191 registros processados
+[CALCULADORA 1] 17300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17400/43191 registros lidos
+[CALCULADORA 1] 17400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17500/43191 registros lidos
+[CALCULADORA 1] 17500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17600/43191 registros lidos
+[CALCULADORA 1] 17600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17700/43191 registros lidos
+[CALCULADORA 1] 17700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17800/43191 registros lidos
+[CALCULADORA 1] 17800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 17900/43191 registros lidos
+[CALCULADORA 1] 17900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18000/43191 registros lidos
+[CALCULADORA 1] 18000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18100/43191 registros lidos
+[CALCULADORA 1] 18100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18200/43191 registros lidos
+[CALCULADORA 1] 18200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18300/43191 registros lidos
+[CALCULADORA 1] 18300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18400/43191 registros lidos
+[CALCULADORA 1] 18400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 18600/43191 registros lidos
+[CALCULADORA 1] 18500/43191 registros processados
+[CALCULADORA 1] 18600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18700/43191 registros lidos
+[CALCULADORA 1] 18700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18800/43191 registros lidos
+[CALCULADORA 1] 18800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 18900/43191 registros lidos
+[CALCULADORA 1] 18900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19000/43191 registros lidos
+[CALCULADORA 1] 19000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19100/43191 registros lidos
+[CALCULADORA 1] 19100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19200/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 19300/43191 registros lidos
+[CALCULADORA 1] 19200/43191 registros processados
+[CALCULADORA 1] 19300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19400/43191 registros lidos
+[CALCULADORA 1] 19400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19500/43191 registros lidos
+[CALCULADORA 1] 19500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19600/43191 registros lidos
+[CALCULADORA 1] 19600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19700/43191 registros lidos
+[CALCULADORA 1] 19700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 19800/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 19900/43191 registros lidos
+[CALCULADORA 1] 19800/43191 registros processados
+[CALCULADORA 1] 19900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20000/43191 registros lidos
+[CALCULADORA 1] 20000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20100/43191 registros lidos
+[CALCULADORA 1] 20100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20200/43191 registros lidos
+[CALCULADORA 1] 20200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20300/43191 registros lidos
+[CALCULADORA 1] 20300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20400/43191 registros lidos
+[CALCULADORA 1] 20400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20500/43191 registros lidos
+[CALCULADORA 1] 20500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20600/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 20700/43191 registros lidos
+[CALCULADORA 1] 20600/43191 registros processados
+[CALCULADORA 1] 20700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20800/43191 registros lidos
+[CALCULADORA 1] 20800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 20900/43191 registros lidos
+[CALCULADORA 1] 20900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21000/43191 registros lidos
+[CALCULADORA 1] 21000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21100/43191 registros lidos
+[CALCULADORA 1] 21100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21200/43191 registros lidos
+[CALCULADORA 1] 21200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21300/43191 registros lidos
+[CALCULADORA 1] 21300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21400/43191 registros lidos
+[CALCULADORA 1] 21400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 21600/43191 registros lidos
+[CALCULADORA 1] 21500/43191 registros processados
+[CALCULADORA 1] 21600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21700/43191 registros lidos
+[CALCULADORA 1] 21700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 21800/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 21900/43191 registros lidos
+[CALCULADORA 1] 21800/43191 registros processados
+[CALCULADORA 1] 21900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22000/43191 registros lidos
+[CALCULADORA 1] 22000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22100/43191 registros lidos
+[CALCULADORA 1] 22100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22200/43191 registros lidos
+[CALCULADORA 1] 22200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22300/43191 registros lidos
+[CALCULADORA 1] 22300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22400/43191 registros lidos
+[CALCULADORA 1] 22400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22500/43191 registros lidos
+[CALCULADORA 1] 22500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22600/43191 registros lidos
+[CALCULADORA 1] 22600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22700/43191 registros lidos
+[CALCULADORA 1] 22700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22800/43191 registros lidos
+[CALCULADORA 1] 22800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 22900/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 23000/43191 registros lidos
+[CALCULADORA 1] 22900/43191 registros processados
+[CALCULADORA 1] 23000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23100/43191 registros lidos
+[CALCULADORA 1] 23100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23200/43191 registros lidos
+[CALCULADORA 1] 23200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23300/43191 registros lidos
+[CALCULADORA 1] 23300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23400/43191 registros lidos
+[CALCULADORA 1] 23400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23500/43191 registros lidos
+[CALCULADORA 1] 23500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23600/43191 registros lidos
+[CALCULADORA 1] 23600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23700/43191 registros lidos
+[CALCULADORA 1] 23700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23800/43191 registros lidos
+[CALCULADORA 1] 23800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 23900/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 24000/43191 registros lidos
+[CALCULADORA 1] 23900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24100/43191 registros lidos
+[CALCULADORA 1] 24000/43191 registros processados
+[CALCULADORA 1] 24100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24200/43191 registros lidos
+[CALCULADORA 1] 24200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24300/43191 registros lidos
+[CALCULADORA 1] 24300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24400/43191 registros lidos
+[CALCULADORA 1] 24400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 24600/43191 registros lidos
+[CALCULADORA 1] 24500/43191 registros processados
+[CALCULADORA 1] 24600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24700/43191 registros lidos
+[CALCULADORA 1] 24700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24800/43191 registros lidos
+[CALCULADORA 1] 24800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 24900/43191 registros lidos
+[CALCULADORA 1] 24900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 25100/43191 registros lidos
+[CALCULADORA 1] 25000/43191 registros processados
+[CALCULADORA 1] 25100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25200/43191 registros lidos
+[CALCULADORA 1] 25200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25300/43191 registros lidos
+[CALCULADORA 1] 25300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25400/43191 registros lidos
+[CALCULADORA 1] 25400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 25600/43191 registros lidos
+[CALCULADORA 1] 25500/43191 registros processados
+[CALCULADORA 1] 25600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25700/43191 registros lidos
+[CALCULADORA 1] 25700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25800/43191 registros lidos
+[CALCULADORA 1] 25800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 25900/43191 registros lidos
+[CALCULADORA 1] 25900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 26100/43191 registros lidos
+[CALCULADORA 1] 26000/43191 registros processados
+[CALCULADORA 1] 26100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26200/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 26300/43191 registros lidos
+[CALCULADORA 1] 26200/43191 registros processados
+[CALCULADORA 1] 26300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26400/43191 registros lidos
+[CALCULADORA 1] 26400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26500/43191 registros lidos
+[CALCULADORA 1] 26500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26600/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 26700/43191 registros lidos
+[CALCULADORA 1] 26600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26800/43191 registros lidos
+[CALCULADORA 1] 26700/43191 registros processados
+[CALCULADORA 1] 26800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 26900/43191 registros lidos
+[CALCULADORA 1] 26900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27000/43191 registros lidos
+[CALCULADORA 1] 27000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 27200/43191 registros lidos
+[CALCULADORA 1] 27100/43191 registros processados
+[CALCULADORA 1] 27200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27300/43191 registros lidos
+[CALCULADORA 1] 27300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27400/43191 registros lidos
+[CALCULADORA 1] 27400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27500/43191 registros lidos
+[CALCULADORA 1] 27500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27600/43191 registros lidos
+[CALCULADORA 1] 27600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 27800/43191 registros lidos
+[CALCULADORA 1] 27700/43191 registros processados
+[CALCULADORA 1] 27800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 27900/43191 registros lidos
+[CALCULADORA 1] 27900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28000/43191 registros lidos
+[CALCULADORA 1] 28000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28100/43191 registros lidos
+[CALCULADORA 1] 28100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28200/43191 registros lidos
+[CALCULADORA 1] 28200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28300/43191 registros lidos
+[CALCULADORA 1] 28300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28400/43191 registros lidos
+[CALCULADORA 1] 28400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28500/43191 registros lidos
+[CALCULADORA 1] 28500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28600/43191 registros lidos
+[CALCULADORA 1] 28600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28700/43191 registros lidos
+[CALCULADORA 1] 28700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28800/43191 registros lidos
+[CALCULADORA 1] 28800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 28900/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 29000/43191 registros lidos
+[CALCULADORA 1] 28900/43191 registros processados
+[CALCULADORA 1] 29000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29100/43191 registros lidos
+[CALCULADORA 1] 29100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29200/43191 registros lidos
+[CALCULADORA 1] 29200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29300/43191 registros lidos
+[CALCULADORA 1] 29300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29400/43191 registros lidos
+[CALCULADORA 1] 29400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29500/43191 registros lidos
+[CALCULADORA 1] 29500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29600/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 29700/43191 registros lidos
+[CALCULADORA 1] 29600/43191 registros processados
+[CALCULADORA 1] 29700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29800/43191 registros lidos
+[CALCULADORA 1] 29800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 29900/43191 registros lidos
+[CALCULADORA 1] 29900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 30100/43191 registros lidos
+[CALCULADORA 1] 30000/43191 registros processados
+[CALCULADORA 1] 30100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30200/43191 registros lidos
+[CALCULADORA 1] 30200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30300/43191 registros lidos
+[CALCULADORA 1] 30300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30400/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 30500/43191 registros lidos
+[CALCULADORA 1] 30400/43191 registros processados
+[CALCULADORA 1] 30500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30600/43191 registros lidos
+[CALCULADORA 1] 30600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30700/43191 registros lidos
+[CALCULADORA 1] 30700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 30800/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 30900/43191 registros lidos
+[CALCULADORA 1] 30800/43191 registros processados
+[CALCULADORA 1] 30900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31000/43191 registros lidos
+[CALCULADORA 1] 31000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31100/43191 registros lidos
+[CALCULADORA 1] 31100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31200/43191 registros lidos
+[CALCULADORA 1] 31200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31300/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 31400/43191 registros lidos
+[CALCULADORA 1] 31300/43191 registros processados
+[CALCULADORA 1] 31400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31500/43191 registros lidos
+[CALCULADORA 1] 31500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31600/43191 registros lidos
+[CALCULADORA 1] 31600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31700/43191 registros lidos
+[CALCULADORA 1] 31700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31800/43191 registros lidos
+[CALCULADORA 1] 31800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 31900/43191 registros lidos
+[CALCULADORA 1] 31900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32000/43191 registros lidos
+[CALCULADORA 1] 32000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32100/43191 registros lidos
+[CALCULADORA 1] 32100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32200/43191 registros lidos
+[CALCULADORA 1] 32200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32300/43191 registros lidos
+[CALCULADORA 1] 32300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32400/43191 registros lidos
+[CALCULADORA 1] 32400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32500/43191 registros lidos
+[CALCULADORA 1] 32500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32600/43191 registros lidos
+[CALCULADORA 1] 32600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 32800/43191 registros lidos
+[CALCULADORA 1] 32700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 32900/43191 registros lidos
+[CALCULADORA 1] 32800/43191 registros processados
+[CALCULADORA 1] 32900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 33100/43191 registros lidos
+[CALCULADORA 1] 33000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33200/43191 registros lidos
+[CALCULADORA 1] 33100/43191 registros processados
+[CALCULADORA 1] 33200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33300/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 33400/43191 registros lidos
+[CALCULADORA 1] 33300/43191 registros processados
+[CALCULADORA 1] 33400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33500/43191 registros lidos
+[CALCULADORA 1] 33500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33600/43191 registros lidos
+[CALCULADORA 1] 33600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33700/43191 registros lidos
+[CALCULADORA 1] 33700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33800/43191 registros lidos
+[CALCULADORA 1] 33800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 33900/43191 registros lidos
+[CALCULADORA 1] 33900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34000/43191 registros lidos
+[CALCULADORA 1] 34000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 34200/43191 registros lidos
+[CALCULADORA 1] 34100/43191 registros processados
+[CALCULADORA 1] 34200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34300/43191 registros lidos
+[CALCULADORA 1] 34300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34400/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 34500/43191 registros lidos
+[CALCULADORA 1] 34400/43191 registros processados
+[CALCULADORA 1] 34500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34600/43191 registros lidos
+[CALCULADORA 1] 34600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34700/43191 registros lidos
+[CALCULADORA 1] 34700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34800/43191 registros lidos
+[CALCULADORA 1] 34800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 34900/43191 registros lidos
+[CALCULADORA 1] 34900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 35100/43191 registros lidos
+[CALCULADORA 1] 35000/43191 registros processados
+[CALCULADORA 1] 35100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35200/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 35300/43191 registros lidos
+[CALCULADORA 1] 35200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35400/43191 registros lidos
+[CALCULADORA 1] 35300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35500/43191 registros lidos
+[CALCULADORA 1] 35400/43191 registros processados
+[CALCULADORA 1] 35500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35600/43191 registros lidos
+[CALCULADORA 1] 35600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35700/43191 registros lidos
+[CALCULADORA 1] 35700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35800/43191 registros lidos
+[CALCULADORA 1] 35800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 35900/43191 registros lidos
+[CALCULADORA 1] 35900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36000/43191 registros lidos
+[CALCULADORA 1] 36000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36100/43191 registros lidos
+[CALCULADORA 1] 36100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36200/43191 registros lidos
+[CALCULADORA 1] 36200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36300/43191 registros lidos
+[CALCULADORA 1] 36300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36400/43191 registros lidos
+[CALCULADORA 1] 36400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36500/43191 registros lidos
+[CALCULADORA 1] 36500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36600/43191 registros lidos
+[CALCULADORA 1] 36600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36700/43191 registros lidos
+[CALCULADORA 1] 36700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36800/43191 registros lidos
+[CALCULADORA 1] 36800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 36900/43191 registros lidos
+[CALCULADORA 1] 36900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37000/43191 registros lidos
+[CALCULADORA 1] 37000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 37200/43191 registros lidos
+[CALCULADORA 1] 37100/43191 registros processados
+[CALCULADORA 1] 37200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37300/43191 registros lidos
+[CALCULADORA 1] 37300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37400/43191 registros lidos
+[CALCULADORA 1] 37400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37500/43191 registros lidos
+[CALCULADORA 1] 37500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37600/43191 registros lidos
+[CALCULADORA 1] 37600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37700/43191 registros lidos
+[CALCULADORA 1] 37700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37800/43191 registros lidos
+[CALCULADORA 1] 37800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 37900/43191 registros lidos
+[CALCULADORA 1] 37900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38000/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 38100/43191 registros lidos
+[CALCULADORA 1] 38000/43191 registros processados
+[CALCULADORA 1] 38100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38200/43191 registros lidos
+[CALCULADORA 1] 38200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38300/43191 registros lidos
+[CALCULADORA 1] 38300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38400/43191 registros lidos
+[CALCULADORA 1] 38400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38500/43191 registros lidos
+[CALCULADORA 1] 38500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38600/43191 registros lidos
+[CALCULADORA 1] 38600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38700/43191 registros lidos
+[CALCULADORA 1] 38700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38800/43191 registros lidos
+[CALCULADORA 1] 38800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 38900/43191 registros lidos
+[CALCULADORA 1] 38900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39000/43191 registros lidos
+[CALCULADORA 1] 39000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39100/43191 registros lidos
+[CALCULADORA 1] 39100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39200/43191 registros lidos
+[CALCULADORA 1] 39200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39300/43191 registros lidos
+[CALCULADORA 1] 39300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39400/43191 registros lidos
+[CALCULADORA 1] 39400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39500/43191 registros lidos
+[CALCULADORA 1] 39500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39600/43191 registros lidos
+[CALCULADORA 1] 39600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39700/43191 registros lidos
+[CALCULADORA 1] 39700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39800/43191 registros lidos
+[CALCULADORA 1] 39800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 39900/43191 registros lidos
+[CALCULADORA 1] 39900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40000/43191 registros lidos
+[CALCULADORA 1] 40000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 40200/43191 registros lidos
+[CALCULADORA 1] 40100/43191 registros processados
+[CALCULADORA 1] 40200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40300/43191 registros lidos
+[CALCULADORA 1] 40300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40400/43191 registros lidos
+[CALCULADORA 1] 40400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40500/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 40600/43191 registros lidos
+[CALCULADORA 1] 40500/43191 registros processados
+[CALCULADORA 1] 40600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40700/43191 registros lidos
+[CALCULADORA 1] 40700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40800/43191 registros lidos
+[CALCULADORA 1] 40800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 40900/43191 registros lidos
+[CALCULADORA 1] 40900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41000/43191 registros lidos
+[CALCULADORA 1] 41000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41100/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 41200/43191 registros lidos
+[CALCULADORA 1] 41100/43191 registros processados
+[CALCULADORA 1] 41200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41300/43191 registros lidos
+[CALCULADORA 1] 41300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41400/43191 registros lidos
+[CALCULADORA 1] 41400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41500/43191 registros lidos
+[CALCULADORA 1] 41500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41600/43191 registros lidos
+[CALCULADORA 1] 41600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41700/43191 registros lidos
+[LEITORA] senzemo_cx_bg.json - 41800/43191 registros lidos
+[CALCULADORA 1] 41700/43191 registros processados
+[CALCULADORA 1] 41800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 41900/43191 registros lidos
+[CALCULADORA 1] 41900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42000/43191 registros lidos
+[CALCULADORA 1] 42000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42100/43191 registros lidos
+[CALCULADORA 1] 42100/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42200/43191 registros lidos
+[CALCULADORA 1] 42200/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42300/43191 registros lidos
+[CALCULADORA 1] 42300/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42400/43191 registros lidos
+[CALCULADORA 1] 42400/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42500/43191 registros lidos
+[CALCULADORA 1] 42500/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42600/43191 registros lidos
+[CALCULADORA 1] 42600/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42700/43191 registros lidos
+[CALCULADORA 1] 42700/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42800/43191 registros lidos
+[CALCULADORA 1] 42800/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 42900/43191 registros lidos
+[CALCULADORA 1] 42900/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 43000/43191 registros lidos
+[CALCULADORA 1] 43000/43191 registros processados
+[LEITORA] senzemo_cx_bg.json - 43100/43191 registros lidos
+[CALCULADORA 1] 43100/43191 registros processados
+[CALCULADORA 1] Thread finalizada - 43191 registros processados
+[LEITORA] Thread finalizada: senzemo_cx_bg.json - 43191 registros lidos

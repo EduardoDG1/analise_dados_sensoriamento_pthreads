@@ -6,10 +6,19 @@
 #include "structs.h"
 #include "cJSON.h"
 #include "processData.h"
+#include <pthread.h>   
+#include <semaphore.h> 
 
 void *carregarJson(void *args)
 {
+    
     ARGSCARREGARJSON *parametros = (ARGSCARREGARJSON *)args;
+    SharedBuffer *sb = parametros->shared;
+
+    //envia inicio pra thread de logs
+    char msg[LOG_MSG_SIZE];
+    snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Thread iniciada: %s", parametros->nomeArquivo);
+    log_push(parametros->lq, msg);
 
     FILE *f = fopen(parametros->nomeArquivo, "rb");
 
@@ -30,375 +39,512 @@ void *carregarJson(void *args)
 
     fclose(f);
 
-    parametros->json = cJSON_Parse(buffer);
+    cJSON *array = cJSON_Parse(buffer);
     free(buffer);
+
+    pthread_mutex_lock(&sb->mutex);
+    sb->total_registros = cJSON_GetArraySize(array);
+    pthread_mutex_unlock(&sb->mutex);
+
+    cJSON *item = NULL;
+    cJSON_ArrayForEach(item, array){
+        ItemBuffer entry;
+        entry.ultimo = 0;
+
+        //a ideia é funcionar pros 2 formatos de arquivo
+        cJSON *payloadNode = cJSON_GetObjectItem(item, "brute_data");
+        if(!payloadNode) payloadNode = cJSON_GetObjectItem(item, "payload");
+
+        if (!payloadNode) { printf("campo payload nao encontrado\n"); exit(1); }
+
+        entry.payloadStr = strdup(payloadNode->valuestring);
+
+        cJSON *dateNode = cJSON_GetObjectItem(item, "payload_date");
+        if (!dateNode) dateNode = cJSON_GetObjectItem(item, "created_at");
+        sscanf(dateNode->valuestring, "%[^T]", entry.payloadDate);
+        entry.payloadDate[SIZE_DATA - 1] = '\0';
+
+        sem_wait(&sb->sem_empty);
+        pthread_mutex_lock(&sb->mutex);
+        sb->buffer[sb->head] = entry;
+        sb->head = (sb->head + 1) % BUFFER_SIZE;
+        sb->count++;
+        sb->registros_lidos++;
+        // progresso enviado pros logs
+        if (sb->registros_lidos % 100 == 0) {
+            snprintf(msg, LOG_MSG_SIZE, "[LEITORA] %s - %d/%d registros lidos",
+                parametros->nomeArquivo, sb->registros_lidos, sb->total_registros);
+            log_push(parametros->lq, msg);
+        }
+        pthread_mutex_unlock(&sb->mutex);
+        sem_post(&sb->sem_full);
+    }
+
+    //avisa que acabou 
+    ItemBuffer fim = {0};
+    fim.ultimo = 1;
+
+    sem_wait(&sb->sem_empty);
+    pthread_mutex_lock(&sb->mutex);
+    sb->buffer[sb->head] = fim;
+    sb->head = (sb->head + 1) % BUFFER_SIZE;
+    sb->count++;
+    sb->leitura_concluida = 1;
+    pthread_mutex_unlock(&sb->mutex);
+    sem_post(&sb->sem_full);
+
+    cJSON_Delete(array);
+    
+     snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Thread finalizada: %s - %d registros lidos",
+        parametros->nomeArquivo, sb->registros_lidos);
+    log_push(parametros->lq, msg);  // precisa estar ANTES do return
+
+    return NULL;
+
+
+    
 }
 
 void *processarJson(void *args)
 {
     ARGSPROCESSARJSON *parametros = (ARGSPROCESSARJSON *)args;
+    SharedBuffer *sb = parametros->shared;
+    int primeiroItem = 1;
 
-    cJSON *json = parametros->json;
-    cJSON* horarioFinal = cJSON_GetObjectItem(cJSON_GetArrayItem(json, 0),"payload_date");
+    char msg[LOG_MSG_SIZE];
 
-    sscanf(horarioFinal->valuestring, "%[^T]", parametros->periodoFim);
-    parametros->periodoFim[SIZE_DATA-1] = '\0';
+    snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 1] Thread iniciada");
+    log_push(parametros->lq, msg);
 
-    cJSON *itemArray;
 
-    cJSON_ArrayForEach(itemArray,json){
-        cJSON *dadosBrutos = cJSON_Parse(cJSON_GetObjectItem(itemArray,"brute_data")->valuestring);
+    while (1)
+    {
+        // consome um item do buffer
+        sem_wait(&sb->sem_full);
+        pthread_mutex_lock(&sb->mutex);
+        ItemBuffer entry = sb->buffer[sb->tail];
+        sb->tail = (sb->tail + 1) % BUFFER_SIZE;
+        sb->count--;
+        pthread_mutex_unlock(&sb->mutex);
+        sem_post(&sb->sem_empty);
 
-        if(!itemArray->next){
-            sscanf(cJSON_GetObjectItem(itemArray,"payload_date")->valuestring, "%[^T]", parametros->periodoInicio);
-            parametros->periodoInicio[SIZE_DATA-1] = '\0';
+        // sentinela: thread leitora terminou
+        if (entry.ultimo) break;
+
+        if (primeiroItem) {
+            sscanf(entry.payloadDate, "%[^T]", parametros->periodoFim);
+            parametros->periodoFim[SIZE_DATA - 1] = '\0';
+            primeiroItem = 0;
         }
+        sscanf(entry.payloadDate, "%[^T]", parametros->periodoInicio);
+        parametros->periodoInicio[SIZE_DATA - 1] = '\0';
+
+        // parse do payload bruto
+        cJSON *dadosBrutos = cJSON_Parse(entry.payloadStr);
+        free(entry.payloadStr);
 
         bool caxias = true;
-
-        if(strstr(cJSON_GetObjectItem(dadosBrutos,"device_name")->valuestring, "Bento"))
+        if (strstr(cJSON_GetObjectItem(dadosBrutos, "device_name")->valuestring, "Bento"))
         {
             caxias = false;
             parametros->estatisticasBento.numeroRegistros++;
         }
-        else{
+        else
+        {
             parametros->estatisticasCaxias.numeroRegistros++;
         }
 
         cJSON *itemDadosBrutos;
-        cJSON_ArrayForEach(itemDadosBrutos, cJSON_GetObjectItem(dadosBrutos,"data")){
-            
-            cJSON *variavel = cJSON_GetObjectItem(itemDadosBrutos,"variable");
-
-            if(!strcmp(variavel->valuestring, "temperature"))
+        cJSON_ArrayForEach(itemDadosBrutos, cJSON_GetObjectItem(dadosBrutos, "data"))
+        {
+            cJSON *variavel = cJSON_GetObjectItem(itemDadosBrutos, "variable");
+            if (!variavel) { printf("erro ao parsear variable"); continue;} //teste
+            if (!strcmp(variavel->valuestring, "temperature"))
             {
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos,"time");
-                if(caxias)
+                cJSON *valor   = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos, "time");
+                if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosTemperatura.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosTemperatura.maxima)
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasCaxias.dadosTemperatura.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima);
-                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima);
+                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosTemperatura.minima)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosTemperatura.minima)
                     {
-                        parametros->estatisticasCaxias.dadosTemperatura.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima);
-                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasCaxias.dadosTemperatura.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima);
+                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
-                else{
+                else
+                {
                     parametros->estatisticasBento.dadosTemperatura.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosTemperatura.maxima)
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasBento.dadosTemperatura.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima);
-                        parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima);
+                        parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosTemperatura.minima)
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosTemperatura.minima)
                     {
-                        parametros->estatisticasBento.dadosTemperatura.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosTemperatura.dataHoraMinima);
-                        parametros->estatisticasBento.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasBento.dadosTemperatura.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosTemperatura.dataHoraMinima);
+                        parametros->estatisticasBento.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "humidity"))
-            {   
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos,"time");
-                if(caxias)
+            else if (!strcmp(variavel->valuestring, "humidity"))
+            {
+                cJSON *valor    = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos, "time");
+                if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosUmidade.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosUmidade.maxima)
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosUmidade.maxima)
                     {
                         parametros->estatisticasCaxias.dadosUmidade.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima);
-                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima);
+                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosUmidade.minima)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosUmidade.minima)
                     {
-                        parametros->estatisticasCaxias.dadosUmidade.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima);
-                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasCaxias.dadosUmidade.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima);
+                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
-                else{
+                else
+                {
                     parametros->estatisticasBento.dadosUmidade.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosUmidade.maxima)
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosUmidade.maxima)
                     {
                         parametros->estatisticasBento.dadosUmidade.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosUmidade.dataHoraMaxima);
-                        parametros->estatisticasBento.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosUmidade.dataHoraMaxima);
+                        parametros->estatisticasBento.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosUmidade.minima)
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosUmidade.minima)
                     {
-                        parametros->estatisticasBento.dadosUmidade.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosUmidade.dataHoraMinima);
-                        parametros->estatisticasBento.dadosUmidade.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasBento.dadosUmidade.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosUmidade.dataHoraMinima);
+                        parametros->estatisticasBento.dadosUmidade.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "airpressure"))
-            {   
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos,"time");
-                if(caxias)
+            else if (!strcmp(variavel->valuestring, "airpressure"))
+            {
+                cJSON *valor    = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos, "time");
+                if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosPressaoAtmosferica.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima)
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima);
-                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima);
+                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima)
                     {
-                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima);
-                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima);
+                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
-                else{
+                else
+                {
                     parametros->estatisticasBento.dadosPressaoAtmosferica.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosPressaoAtmosferica.maxima)
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasBento.dadosPressaoAtmosferica.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima);
-                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima);
+                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosPressaoAtmosferica.minima)
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosPressaoAtmosferica.minima)
                     {
-                        parametros->estatisticasBento.dadosPressaoAtmosferica.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima);
-                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasBento.dadosPressaoAtmosferica.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima);
+                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "batterylevel"))
-            {   
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                if(caxias)
+            else if (!strcmp(variavel->valuestring, "batterylevel"))
+            {
+                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                if (caxias)
                 {
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosBateria.inicial)
-                    {
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosBateria.inicial)
                         parametros->estatisticasCaxias.dadosBateria.inicial = valor->valuedouble;
-                    }
                 }
-                else{
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosBateria.inicial)
-                    {
+                else
+                {
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosBateria.inicial)
                         parametros->estatisticasBento.dadosBateria.inicial = valor->valuedouble;
-                    }
                 }
             }
         }
+
+        cJSON_Delete(dadosBrutos);
+
+        pthread_mutex_lock(&sb->mutex);
+        sb->registros_processados++;
+
+        // progresso a cada 100 registros
+        if (sb->registros_processados % 100 == 0) {
+            snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 1] %d/%d registros processados",
+                sb->registros_processados, sb->total_registros);
+            log_push(parametros->lq, msg);
+        }
+        pthread_mutex_unlock(&sb->mutex);
     }
+
+    snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 1] Thread finalizada - %d registros processados",
+    sb->registros_processados);
+    log_push(parametros->lq, msg);
+
+    return NULL;
 }
 
 void *processarJsonMqtt(void *args)
 {
+    
     ARGSPROCESSARJSONMQTT *parametros = (ARGSPROCESSARJSONMQTT *)args;
+    SharedBuffer *sb = parametros->shared;
+    int primeiroItem = 1;
 
-    cJSON *json = parametros->json;
-    cJSON* horarioFinal = cJSON_GetObjectItem(cJSON_GetArrayItem(json, 0),"created_at");
+    char msg[LOG_MSG_SIZE];
+    snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 2] Thread iniciada");
+    log_push(parametros->lq, msg);
 
-    sscanf(horarioFinal->valuestring, "%[^T]", parametros->periodoInicio);
-    parametros->periodoInicio[SIZE_DATA-1] = '\0';
-
-    cJSON *itemArray;
-    cJSON_ArrayForEach(itemArray, json)
+    while (1)
     {
-        cJSON *dadosBrutos = cJSON_Parse(cJSON_GetObjectItem(itemArray,"payload")->valuestring);
+        // consome um item do buffer
+        sem_wait(&sb->sem_full);
+        pthread_mutex_lock(&sb->mutex);
+        ItemBuffer entry = sb->buffer[sb->tail];
+        sb->tail = (sb->tail + 1) % BUFFER_SIZE;
+        sb->count--;
+        pthread_mutex_unlock(&sb->mutex);
+        sem_post(&sb->sem_empty);
 
-        if(!itemArray->next){
-            sscanf(cJSON_GetObjectItem(itemArray,"created_at")->valuestring, "%[^T]", parametros->periodoFim);
-            parametros->periodoFim[SIZE_DATA-1] = '\0';
+        // sentinela: leitora terminou
+        if (entry.ultimo) break;
+
+        // captura período
+        if (primeiroItem) {
+            sscanf(entry.payloadDate, "%[^T]", parametros->periodoInicio);
+            parametros->periodoInicio[SIZE_DATA - 1] = '\0';
+            primeiroItem = 0;
         }
+        sscanf(entry.payloadDate, "%[^T]", parametros->periodoFim);
+        parametros->periodoFim[SIZE_DATA - 1] = '\0';
+
+        // parse do payload bruto
+        cJSON *dadosBrutos = cJSON_Parse(entry.payloadStr);
+        free(entry.payloadStr);
+
+        if(!dadosBrutos) {printf("Erro ao parsear payload: %s\n", entry.payloadDate); continue;}
 
         bool caxias = true;
-
-        if(strstr(cJSON_GetObjectItem(dadosBrutos,"device_name")->valuestring, "Bento"))
+        if (strstr(cJSON_GetObjectItem(dadosBrutos, "device_name")->valuestring, "Bento"))
         {
             caxias = false;
             parametros->estatisticasBento.numeroRegistros++;
         }
-        else{
+        else
+        {
             parametros->estatisticasCaxias.numeroRegistros++;
         }
 
         cJSON *itemDadosBrutos;
-        cJSON_ArrayForEach(itemDadosBrutos, cJSON_GetObjectItem(dadosBrutos,"data"))
+        cJSON_ArrayForEach(itemDadosBrutos, cJSON_GetObjectItem(dadosBrutos, "data"))
         {
-             cJSON *variavel = cJSON_GetObjectItem(itemDadosBrutos,"variable");
-
-            if(!strcmp(variavel->valuestring, "temperature"))
+            cJSON *variavel = cJSON_GetObjectItem(itemDadosBrutos, "variable");
+            if (!variavel) { printf("erro ao parsear variable"); continue;} //teste
+            if (!strcmp(variavel->valuestring, "temperature"))
             {
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos,"time");
-                if(caxias)
+                cJSON *valor    = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos, "time");
+                if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosTemperatura.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosTemperatura.maxima)
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasCaxias.dadosTemperatura.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima);
-                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima);
+                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosTemperatura.minima)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosTemperatura.minima)
                     {
-                        parametros->estatisticasCaxias.dadosTemperatura.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima);
-                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasCaxias.dadosTemperatura.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima);
+                        parametros->estatisticasCaxias.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
-                else{
+                else
+                {
                     parametros->estatisticasBento.dadosTemperatura.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosTemperatura.maxima)
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasBento.dadosTemperatura.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima);
-                        parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima);
+                        parametros->estatisticasBento.dadosTemperatura.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosTemperatura.minima)
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosTemperatura.minima)
                     {
-                        parametros->estatisticasBento.dadosTemperatura.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosTemperatura.dataHoraMinima);
-                        parametros->estatisticasBento.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasBento.dadosTemperatura.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosTemperatura.dataHoraMinima);
+                        parametros->estatisticasBento.dadosTemperatura.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "humidity"))
-            {   
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos,"time");
-                if(caxias)
+            else if (!strcmp(variavel->valuestring, "humidity"))
+            {
+                cJSON *valor    = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos, "time");
+                if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosUmidade.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosUmidade.maxima)
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosUmidade.maxima)
                     {
                         parametros->estatisticasCaxias.dadosUmidade.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima);
-                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima);
+                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosUmidade.minima)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosUmidade.minima)
                     {
-                        parametros->estatisticasCaxias.dadosUmidade.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima);
-                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasCaxias.dadosUmidade.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima);
+                        parametros->estatisticasCaxias.dadosUmidade.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
-                else{
+                else
+                {
                     parametros->estatisticasBento.dadosUmidade.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosUmidade.maxima)
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosUmidade.maxima)
                     {
                         parametros->estatisticasBento.dadosUmidade.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosUmidade.dataHoraMaxima);
-                        parametros->estatisticasBento.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosUmidade.dataHoraMaxima);
+                        parametros->estatisticasBento.dadosUmidade.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosUmidade.minima)
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosUmidade.minima)
                     {
-                        parametros->estatisticasBento.dadosUmidade.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosUmidade.dataHoraMinima);
-                        parametros->estatisticasBento.dadosUmidade.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasBento.dadosUmidade.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosUmidade.dataHoraMinima);
+                        parametros->estatisticasBento.dadosUmidade.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "airpressure"))
-            {   
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos,"time");
-                if(caxias)
+            else if (!strcmp(variavel->valuestring, "airpressure"))
+            {
+                cJSON *valor    = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                cJSON *dataHora = cJSON_GetObjectItem(itemDadosBrutos, "time");
+                if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosPressaoAtmosferica.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima)
+                    if (valor->valuedouble > parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima);
-                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima);
+                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima)
                     {
-                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima);
-                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima);
+                        parametros->estatisticasCaxias.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
-                else{
+                else
+                {
                     parametros->estatisticasBento.dadosPressaoAtmosferica.media += valor->valuedouble;
-                    if(valor->valuedouble > parametros->estatisticasBento.dadosPressaoAtmosferica.maxima)
+                    if (valor->valuedouble > parametros->estatisticasBento.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasBento.dadosPressaoAtmosferica.maxima = valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima);
-                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA-1] = '\0';
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima);
+                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMaxima[SIZE_DATAHORA - 1] = '\0';
                     }
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosPressaoAtmosferica.minima)
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosPressaoAtmosferica.minima)
                     {
-                        parametros->estatisticasBento.dadosPressaoAtmosferica.minima= valor->valuedouble;
-                        sscanf(dataHora->valuestring,"%[^.]",parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima);
-                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA-1] = '\0';
+                        parametros->estatisticasBento.dadosPressaoAtmosferica.minima = valor->valuedouble;
+                        sscanf(dataHora->valuestring, "%[^.]", parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima);
+                        parametros->estatisticasBento.dadosPressaoAtmosferica.dataHoraMinima[SIZE_DATAHORA - 1] = '\0';
                     }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "batterylevel"))
-            {   
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                if(caxias)
+            else if (!strcmp(variavel->valuestring, "batterylevel"))
+            {
+                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                if (caxias)
                 {
-                    if(valor->valuedouble < parametros->estatisticasCaxias.dadosBateria.final)
-                    {
+                    // mqtt: busca o mínimo (bateria final)
+                    if (valor->valuedouble < parametros->estatisticasCaxias.dadosBateria.final)
                         parametros->estatisticasCaxias.dadosBateria.final = valor->valuedouble;
-                    }
                 }
-                else{
-                    if(valor->valuedouble < parametros->estatisticasBento.dadosBateria.final)
-                    {
+                else
+                {
+                    if (valor->valuedouble < parametros->estatisticasBento.dadosBateria.final)
                         parametros->estatisticasBento.dadosBateria.final = valor->valuedouble;
-                    }
                 }
             }
-            else if(!strcmp(variavel->valuestring, "lora_spreading_factor"))
-            {   
+            else if (!strcmp(variavel->valuestring, "lora_spreading_factor"))
+            {
                 int i;
-                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos,"value");
-                if(caxias)
+                cJSON *valor = cJSON_GetObjectItem(itemDadosBrutos, "value");
+                if (caxias)
                 {
                     bool estaPresente = false;
                     for (i = 0; i < parametros->estatisticasCaxias.dadosSpreadingFactors.nItens; i++)
                     {
-                        if(valor->valueint == parametros->estatisticasCaxias.dadosSpreadingFactors.spreadingFactors[i])
+                        if (valor->valueint == parametros->estatisticasCaxias.dadosSpreadingFactors.spreadingFactors[i])
                         {
                             estaPresente = true;
                             break;
                         }
                     }
-                    if(!estaPresente)
-                    {
+                    if (!estaPresente)
                         parametros->estatisticasCaxias.dadosSpreadingFactors.spreadingFactors[parametros->estatisticasCaxias.dadosSpreadingFactors.nItens++] = valor->valueint;
-                    }
                 }
-                else{
+                else
+                {
                     bool estaPresente = false;
                     for (i = 0; i < parametros->estatisticasBento.dadosSpreadingFactors.nItens; i++)
                     {
-                        if(valor->valueint == parametros->estatisticasBento.dadosSpreadingFactors.spreadingFactors[i])
+                        if (valor->valueint == parametros->estatisticasBento.dadosSpreadingFactors.spreadingFactors[i])
                         {
                             estaPresente = true;
                             break;
                         }
                     }
-                    if(!estaPresente)
-                    {
+                    if (!estaPresente)
                         parametros->estatisticasBento.dadosSpreadingFactors.spreadingFactors[parametros->estatisticasBento.dadosSpreadingFactors.nItens++] = valor->valueint;
-                    }
                 }
             }
         }
+
+        cJSON_Delete(dadosBrutos);
+
+        pthread_mutex_lock(&sb->mutex);
+        sb->registros_processados++;
+        if (sb->registros_processados % 100 == 0) {
+            snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 2] %d/%d registros processados",
+                sb->registros_processados, sb->total_registros);
+            log_push(parametros->lq, msg);
+        }
+        pthread_mutex_unlock(&sb->mutex);
+        pthread_mutex_unlock(&sb->mutex);
     }
+
+    snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 2] Thread finalizada - %d registros processados",
+        sb->registros_processados);
+    log_push(parametros->lq, msg);
+
+
+    return NULL;
 }
+
 
 ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCaxias1, ESTATISTICASCAXIAS estatisticasCaxias2)
 {
@@ -694,12 +840,54 @@ void imprimirInformacoesNaTela(ARGSIMPRIMIRDADOS argsImprimirDados){
     printf("DESEMPENHO\n");
     printf("------------------------------------------------------------\n");
     printf("Tempo total de execução: %.2f segundos\n",argsImprimirDados.tempo);
-    printf("Threads utilizadas: 3\n");
-    printf("- Thread 1: leitura dos dados\n");
-    printf("- Thread 2: cálculo das estatísticas\n");
-    printf("- Thread 3: registro de logs\n\n");
+    printf("Threads utilizadas: 5\n");
+    printf("- 2 Thread para leitura e parse de JSON(1 para cada arquivo)\n");
+    printf("- 2 Thread para cálculo das estatísticas(1 para cada thread de leitura)\n");
+    printf("- 1 Thread para registro de logs\n\n");
     printf("Arquivo de log gerado: processamento.log\n\n");
     printf("============================================================\n");
     printf("Processamento finalizado com sucesso.\n");
     printf("============================================================\n");
+}
+
+void log_push(LogQueue *lq, const char *mensagem)
+{
+    ItemLog item;
+    item.ultimo = 0;
+    strncpy(item.mensagem, mensagem, LOG_MSG_SIZE - 1);
+    item.mensagem[LOG_MSG_SIZE - 1] = '\0';
+
+    sem_wait(&lq->sem_empty);
+    pthread_mutex_lock(&lq->mutex);
+    lq->buffer[lq->head] = item;
+    lq->head = (lq->head + 1) % LOG_QUEUE_SIZE;
+    lq->count++;
+    pthread_mutex_unlock(&lq->mutex);
+    sem_post(&lq->sem_full);
+}
+
+void *threadLog(void *args)
+{
+    LogQueue *lq = (LogQueue *)args;
+    FILE *f = fopen("processamento.log", "w");
+    if (!f) { printf("Erro ao abrir arquivo de log!\n"); return NULL; }
+
+    while (1)
+    {
+        sem_wait(&lq->sem_full);
+        pthread_mutex_lock(&lq->mutex);
+        ItemLog item = lq->buffer[lq->tail];
+        lq->tail = (lq->tail + 1) % LOG_QUEUE_SIZE;
+        lq->count--;
+        pthread_mutex_unlock(&lq->mutex);
+        sem_post(&lq->sem_empty);
+
+        if (item.ultimo) break;
+
+        fprintf(f, "%s\n", item.mensagem);
+        fflush(f); // garante gravação imediata
+    }
+
+    fclose(f);
+    return NULL;
 }

@@ -4,8 +4,47 @@
 #define SIZE_DATAHORA 20
 #define SIZE_DATA 11
 #define NUMBER_SPREADING_FACTORS 6
+#define BUFFER_SIZE 100
+
+#include <pthread.h>   
+#include <semaphore.h> // sem_t, sem_wait, sem_post
 
 #include  "cJSON.h"
+
+#define LOG_QUEUE_SIZE 128
+#define LOG_MSG_SIZE 256
+
+typedef struct {
+    char mensagem[LOG_MSG_SIZE];
+    int ultimo;
+} ItemLog;
+
+typedef struct {
+    ItemLog buffer[LOG_QUEUE_SIZE];
+    int head, tail, count;
+    pthread_mutex_t mutex;
+    sem_t sem_empty;
+    sem_t sem_full;
+} LogQueue;
+
+typedef struct {
+    char *payloadStr;  // string do brute_data/payload, alocada pela thread leitora
+    char payloadDate[SIZE_DATA];
+    int ultimo;        
+} ItemBuffer;
+
+typedef struct {
+    ItemBuffer buffer[BUFFER_SIZE];
+    int head, tail, count;
+    pthread_mutex_t mutex;
+    sem_t sem_empty;
+    sem_t sem_full;
+    int total_registros;
+    int registros_lidos;
+    int registros_processados;
+    int leitura_concluida;
+} SharedBuffer;
+
 
 typedef struct structs
 {
@@ -80,7 +119,8 @@ typedef struct
 
 typedef struct
 {
-    cJSON *json;
+    SharedBuffer *shared;
+    LogQueue *lq;
     ESTATISTICASCAXIAS estatisticasCaxias;
     ESTATISTICASBENTO estatisticasBento;
     char periodoInicio[SIZE_DATA];
@@ -89,7 +129,8 @@ typedef struct
 
 typedef struct
 {
-    cJSON *json;
+    SharedBuffer *shared;
+    LogQueue *lq;
     ESTATISTICASCAXIAS estatisticasCaxias;
     ESTATISTICASBENTO estatisticasBento;
     char periodoInicio[SIZE_DATA];
@@ -100,6 +141,8 @@ typedef struct
 {
     char *nomeArquivo;
     cJSON *json;
+    SharedBuffer *shared;
+    LogQueue *lq;
 }ARGSCARREGARJSON;
 
 typedef struct
@@ -116,5 +159,4 @@ typedef struct
     ESTATISTICASCAXIAS estatisticasCaxias;
     ESTATISTICASBENTO estatisticasBento;
 }ARGSIMPRIMIRDADOS;
-
 #endif
