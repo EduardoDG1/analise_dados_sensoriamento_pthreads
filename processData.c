@@ -166,6 +166,7 @@ void *processarJson(void *args)
                 if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosTemperatura.media += valor->valuedouble;
+                    parametros->estatisticasCaxias.contadores.temperatura++;
                     if (valor->valuedouble > parametros->estatisticasCaxias.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasCaxias.dadosTemperatura.maxima = valor->valuedouble;
@@ -182,6 +183,7 @@ void *processarJson(void *args)
                 else
                 {
                     parametros->estatisticasBento.dadosTemperatura.media += valor->valuedouble;
+                    parametros->estatisticasBento.contadores.temperatura++;
                     if (valor->valuedouble > parametros->estatisticasBento.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasBento.dadosTemperatura.maxima = valor->valuedouble;
@@ -203,6 +205,7 @@ void *processarJson(void *args)
                 if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosUmidade.media += valor->valuedouble;
+                    parametros->estatisticasCaxias.contadores.umidade++;
                     if (valor->valuedouble > parametros->estatisticasCaxias.dadosUmidade.maxima)
                     {
                         parametros->estatisticasCaxias.dadosUmidade.maxima = valor->valuedouble;
@@ -219,6 +222,7 @@ void *processarJson(void *args)
                 else
                 {
                     parametros->estatisticasBento.dadosUmidade.media += valor->valuedouble;
+                    parametros->estatisticasBento.contadores.umidade++;
                     if (valor->valuedouble > parametros->estatisticasBento.dadosUmidade.maxima)
                     {
                         parametros->estatisticasBento.dadosUmidade.maxima = valor->valuedouble;
@@ -240,6 +244,7 @@ void *processarJson(void *args)
                 if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosPressaoAtmosferica.media += valor->valuedouble;
+                    parametros->estatisticasCaxias.contadores.pressaoAtmosferica++;
                     if (valor->valuedouble > parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima = valor->valuedouble;
@@ -256,6 +261,7 @@ void *processarJson(void *args)
                 else
                 {
                     parametros->estatisticasBento.dadosPressaoAtmosferica.media += valor->valuedouble;
+                    parametros->estatisticasBento.contadores.pressaoAtmosferica++;
                     if (valor->valuedouble > parametros->estatisticasBento.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasBento.dadosPressaoAtmosferica.maxima = valor->valuedouble;
@@ -370,6 +376,7 @@ void *processarJsonMqtt(void *args)
                 if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosTemperatura.media += valor->valuedouble;
+                    parametros->estatisticasCaxias.contadores.temperatura++;
                     if (valor->valuedouble > parametros->estatisticasCaxias.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasCaxias.dadosTemperatura.maxima = valor->valuedouble;
@@ -386,6 +393,7 @@ void *processarJsonMqtt(void *args)
                 else
                 {
                     parametros->estatisticasBento.dadosTemperatura.media += valor->valuedouble;
+                    parametros->estatisticasBento.contadores.temperatura++;
                     if (valor->valuedouble > parametros->estatisticasBento.dadosTemperatura.maxima)
                     {
                         parametros->estatisticasBento.dadosTemperatura.maxima = valor->valuedouble;
@@ -407,6 +415,7 @@ void *processarJsonMqtt(void *args)
                 if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosUmidade.media += valor->valuedouble;
+                    parametros->estatisticasCaxias.contadores.umidade++;
                     if (valor->valuedouble > parametros->estatisticasCaxias.dadosUmidade.maxima)
                     {
                         parametros->estatisticasCaxias.dadosUmidade.maxima = valor->valuedouble;
@@ -423,6 +432,7 @@ void *processarJsonMqtt(void *args)
                 else
                 {
                     parametros->estatisticasBento.dadosUmidade.media += valor->valuedouble;
+                    parametros->estatisticasBento.contadores.umidade++;
                     if (valor->valuedouble > parametros->estatisticasBento.dadosUmidade.maxima)
                     {
                         parametros->estatisticasBento.dadosUmidade.maxima = valor->valuedouble;
@@ -444,6 +454,7 @@ void *processarJsonMqtt(void *args)
                 if (caxias)
                 {
                     parametros->estatisticasCaxias.dadosPressaoAtmosferica.media += valor->valuedouble;
+                    parametros->estatisticasCaxias.contadores.pressaoAtmosferica++;
                     if (valor->valuedouble > parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasCaxias.dadosPressaoAtmosferica.maxima = valor->valuedouble;
@@ -460,6 +471,7 @@ void *processarJsonMqtt(void *args)
                 else
                 {
                     parametros->estatisticasBento.dadosPressaoAtmosferica.media += valor->valuedouble;
+                    parametros->estatisticasBento.contadores.pressaoAtmosferica++;
                     if (valor->valuedouble > parametros->estatisticasBento.dadosPressaoAtmosferica.maxima)
                     {
                         parametros->estatisticasBento.dadosPressaoAtmosferica.maxima = valor->valuedouble;
@@ -552,8 +564,15 @@ ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCax
 
     estatisticasCaxiasFinal.numeroRegistros = estatisticasCaxias1.numeroRegistros + estatisticasCaxias2.numeroRegistros;
     
+    estatisticasCaxiasFinal.contadores.temperatura = 
+        estatisticasCaxias1.contadores.temperatura + estatisticasCaxias2.contadores.temperatura;
+    estatisticasCaxiasFinal.contadores.umidade = 
+        estatisticasCaxias1.contadores.umidade + estatisticasCaxias2.contadores.umidade;
+    estatisticasCaxiasFinal.contadores.pressaoAtmosferica = 
+        estatisticasCaxias1.contadores.pressaoAtmosferica + estatisticasCaxias2.contadores.pressaoAtmosferica;
+    
     //Temperatura
-    estatisticasCaxiasFinal.dadosTemperatura.media = (estatisticasCaxias1.dadosTemperatura.media + estatisticasCaxias2.dadosTemperatura.media)/estatisticasCaxiasFinal.numeroRegistros;
+    estatisticasCaxiasFinal.dadosTemperatura.media = (estatisticasCaxias1.dadosTemperatura.media + estatisticasCaxias2.dadosTemperatura.media) / estatisticasCaxiasFinal.contadores.temperatura;
     if(estatisticasCaxias1.dadosTemperatura.maxima > estatisticasCaxias2.dadosTemperatura.maxima)
     {
         estatisticasCaxiasFinal.dadosTemperatura.maxima = estatisticasCaxias1.dadosTemperatura.maxima;
@@ -577,7 +596,8 @@ ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCax
     }    
 
     //Umidade
-    estatisticasCaxiasFinal.dadosUmidade.media = (estatisticasCaxias1.dadosUmidade.media + estatisticasCaxias2.dadosUmidade.media)/estatisticasCaxiasFinal.numeroRegistros;
+    estatisticasCaxiasFinal.dadosUmidade.media = (estatisticasCaxias1.dadosUmidade.media + estatisticasCaxias2.dadosUmidade.media) / estatisticasCaxiasFinal.contadores.umidade;
+    //estatisticasCaxiasFinal.dadosUmidade.media = (estatisticasCaxias1.dadosUmidade.media + estatisticasCaxias2.dadosUmidade.media)/estatisticasCaxiasFinal.contadores.umidade;
     if(estatisticasCaxias1.dadosUmidade.maxima > estatisticasCaxias2.dadosUmidade.maxima)
     {
         estatisticasCaxiasFinal.dadosUmidade.maxima = estatisticasCaxias1.dadosUmidade.maxima;
@@ -601,7 +621,7 @@ ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCax
     }   
 
     //PressaoAtmosferica
-    estatisticasCaxiasFinal.dadosPressaoAtmosferica.media = (estatisticasCaxias1.dadosPressaoAtmosferica.media + estatisticasCaxias2.dadosPressaoAtmosferica.media)/estatisticasCaxiasFinal.numeroRegistros;
+    estatisticasCaxiasFinal.dadosPressaoAtmosferica.media = (estatisticasCaxias1.dadosPressaoAtmosferica.media + estatisticasCaxias2.dadosPressaoAtmosferica.media) / estatisticasCaxiasFinal.contadores.pressaoAtmosferica;
     if(estatisticasCaxias1.dadosPressaoAtmosferica.maxima > estatisticasCaxias2.dadosPressaoAtmosferica.maxima)
     {
         estatisticasCaxiasFinal.dadosPressaoAtmosferica.maxima = estatisticasCaxias1.dadosPressaoAtmosferica.maxima;
@@ -645,9 +665,16 @@ ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1
         ESTATISTICASBENTO estatisticasBentoFinal;
 
     estatisticasBentoFinal.numeroRegistros = estatisticasBento1.numeroRegistros + estatisticasBento2.numeroRegistros;
+
+    estatisticasBentoFinal.contadores.temperatura = 
+        estatisticasBento1.contadores.temperatura + estatisticasBento2.contadores.temperatura;
+    estatisticasBentoFinal.contadores.umidade = 
+        estatisticasBento1.contadores.umidade + estatisticasBento2.contadores.umidade;
+    estatisticasBentoFinal.contadores.pressaoAtmosferica = 
+        estatisticasBento1.contadores.pressaoAtmosferica + estatisticasBento2.contadores.pressaoAtmosferica;
     
     //Temperatura
-    estatisticasBentoFinal.dadosTemperatura.media = (estatisticasBento1.dadosTemperatura.media + estatisticasBento2.dadosTemperatura.media)/estatisticasBentoFinal.numeroRegistros;
+    estatisticasBentoFinal.dadosTemperatura.media = (estatisticasBento1.dadosTemperatura.media + estatisticasBento2.dadosTemperatura.media)/estatisticasBentoFinal.contadores.temperatura;
     if(estatisticasBento1.dadosTemperatura.maxima > estatisticasBento2.dadosTemperatura.maxima)
     {
         estatisticasBentoFinal.dadosTemperatura.maxima = estatisticasBento1.dadosTemperatura.maxima;
@@ -671,7 +698,7 @@ ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1
     }    
 
     //Umidade
-    estatisticasBentoFinal.dadosUmidade.media = (estatisticasBento1.dadosUmidade.media + estatisticasBento2.dadosUmidade.media)/estatisticasBentoFinal.numeroRegistros;
+    estatisticasBentoFinal.dadosUmidade.media = (estatisticasBento1.dadosUmidade.media + estatisticasBento2.dadosUmidade.media) / estatisticasBentoFinal.contadores.umidade;
     if(estatisticasBento1.dadosUmidade.maxima > estatisticasBento2.dadosUmidade.maxima)
     {
         estatisticasBentoFinal.dadosUmidade.maxima = estatisticasBento1.dadosUmidade.maxima;
@@ -695,7 +722,7 @@ ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1
     }   
 
     //PressaoAtmosferica
-    estatisticasBentoFinal.dadosPressaoAtmosferica.media = (estatisticasBento1.dadosPressaoAtmosferica.media + estatisticasBento2.dadosPressaoAtmosferica.media)/estatisticasBentoFinal.numeroRegistros;
+    estatisticasBentoFinal.dadosPressaoAtmosferica.media = (estatisticasBento1.dadosPressaoAtmosferica.media + estatisticasBento2.dadosPressaoAtmosferica.media) / estatisticasBentoFinal.contadores.pressaoAtmosferica;
     if(estatisticasBento1.dadosPressaoAtmosferica.maxima > estatisticasBento2.dadosPressaoAtmosferica.maxima)
     {
         estatisticasBentoFinal.dadosPressaoAtmosferica.maxima = estatisticasBento1.dadosPressaoAtmosferica.maxima;

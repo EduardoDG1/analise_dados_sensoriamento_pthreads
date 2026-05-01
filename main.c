@@ -47,9 +47,10 @@ int main(){
     DADOSPRESSAOTMOSFERICA dadosPressaoAtmosferica = {INT_MIN, "", INT_MAX, "", 0};
     DADOSBATERIA dadosBateria = {0, 10, 0};
     DADOSSPREADINGFACTOR dadosSpreadingFactors = {{0}, 0};
+    CONTADORES contadores = {0, 0, 0};
 
-    ESTATISTICASCAXIAS estatisticasCaxias = {0, dadosTemperatura, dadosUmidade, dadosPressaoAtmosferica, dadosBateria, dadosSpreadingFactors};
-    ESTATISTICASBENTO  estatisticasBento  = {0, dadosTemperatura, dadosUmidade, dadosPressaoAtmosferica, dadosBateria, dadosSpreadingFactors};
+    ESTATISTICASCAXIAS estatisticasCaxias = {0, dadosTemperatura, dadosUmidade, dadosPressaoAtmosferica, dadosBateria, dadosSpreadingFactors, contadores};
+    ESTATISTICASBENTO  estatisticasBento  = {0, dadosTemperatura, dadosUmidade, dadosPressaoAtmosferica, dadosBateria, dadosSpreadingFactors, contadores};
 
     // args de processamento
     ARGSPROCESSARJSON argsProc1;
