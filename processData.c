@@ -546,7 +546,6 @@ void *processarJsonMqtt(void *args)
             log_push(parametros->lq, msg);
         }
         pthread_mutex_unlock(&sb->mutex);
-        pthread_mutex_unlock(&sb->mutex);
     }
 
     snprintf(msg, LOG_MSG_SIZE, "[CALCULADORA 2] Thread finalizada - %d registros processados",
