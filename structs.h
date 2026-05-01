@@ -99,12 +99,20 @@ typedef struct
 
 typedef struct
 {
+    int temperatura;
+    int umidade;
+    int pressaoAtmosferica;
+}CONTADORES;
+
+typedef struct
+{
     int numeroRegistros;
     DADOSTEMPERATURA dadosTemperatura;
     DADOSUMIDADE dadosUmidade;
     DADOSPRESSAOTMOSFERICA dadosPressaoAtmosferica;
     DADOSBATERIA dadosBateria;
     DADOSSPREADINGFACTOR dadosSpreadingFactors;
+    CONTADORES contadores;
 }ESTATISTICASCAXIAS;
 
 typedef struct
@@ -115,6 +123,7 @@ typedef struct
     DADOSPRESSAOTMOSFERICA dadosPressaoAtmosferica;
     DADOSBATERIA dadosBateria;
     DADOSSPREADINGFACTOR dadosSpreadingFactors;
+    CONTADORES contadores; 
 }ESTATISTICASBENTO;
 
 typedef struct
