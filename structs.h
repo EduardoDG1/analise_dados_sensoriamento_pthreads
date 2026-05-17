@@ -171,6 +171,7 @@ typedef struct
     float tempo;
     ESTATISTICASCAXIAS estatisticasCaxias;
     ESTATISTICASBENTO estatisticasBento;
+    LogQueue *lq;
 }ARGSIMPRIMIRDADOS;
 
 typedef struct {

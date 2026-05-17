@@ -605,8 +605,12 @@ void *processarJsonMqtt(void *args)
 }
 
 
-ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCaxias1, ESTATISTICASCAXIAS estatisticasCaxias2)
+ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCaxias1, ESTATISTICASCAXIAS estatisticasCaxias2, LogQueue *lq)
 {
+    char msg[LOG_MSG_SIZE];
+    snprintf(msg, LOG_MSG_SIZE, "Iniciando cálculo das estatísticas de Caxias");
+    log_push(lq, msg);
+
     ESTATISTICASCAXIAS estatisticasCaxiasFinal;
 
     estatisticasCaxiasFinal.numeroRegistros = estatisticasCaxias1.numeroRegistros + estatisticasCaxias2.numeroRegistros;
@@ -704,12 +708,19 @@ ESTATISTICASCAXIAS calcularEstatisticasCaxias(ESTATISTICASCAXIAS estatisticasCax
         estatisticasCaxiasFinal.dadosSpreadingFactors.spreadingFactors[i] = estatisticasCaxias2.dadosSpreadingFactors.spreadingFactors[i];
     }
     
+    snprintf(msg, LOG_MSG_SIZE, "Finalizando cálculo das estatísticas de Caxias");
+    log_push(lq, msg);
+
     return estatisticasCaxiasFinal;
 }
 
-ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1, ESTATISTICASBENTO estatisticasBento2)
+ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1, ESTATISTICASBENTO estatisticasBento2, LogQueue *lq)
 {
-        ESTATISTICASBENTO estatisticasBentoFinal;
+    char msg[LOG_MSG_SIZE];
+    snprintf(msg, LOG_MSG_SIZE, "Iniciando cálculo das estatísticas de Bento");
+    log_push(lq, msg);
+
+    ESTATISTICASBENTO estatisticasBentoFinal;
 
     estatisticasBentoFinal.numeroRegistros = estatisticasBento1.numeroRegistros + estatisticasBento2.numeroRegistros;
 
@@ -805,10 +816,17 @@ ESTATISTICASBENTO calcularEstatisticasBento(ESTATISTICASBENTO estatisticasBento1
         estatisticasBentoFinal.dadosSpreadingFactors.spreadingFactors[i] = estatisticasBento2.dadosSpreadingFactors.spreadingFactors[i];
     }
     
+    snprintf(msg, LOG_MSG_SIZE, "Finalizando cálculo das estatísticas de Bento");
+    log_push(lq, msg);
+
     return estatisticasBentoFinal;
 }
 
 void imprimirInformacoesNaTela(ARGSIMPRIMIRDADOS argsImprimirDados){
+    char msg[LOG_MSG_SIZE];
+    snprintf(msg, LOG_MSG_SIZE, "Fazendo a impressão das estatísticas no terminal");
+    log_push(argsImprimirDados.lq, msg);
+
     printf("============================================================\n");
     printf("ANÁLISE DE DADOS DOS SENSORES - CityLivingLab\n");
     printf("Processamento utilizando pthreads\n");

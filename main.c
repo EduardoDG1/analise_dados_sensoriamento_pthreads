@@ -80,20 +80,6 @@ int main(){
     pthread_join(tProcessar1, NULL);
     pthread_join(tProcessar2, NULL);
 
-
-    // após pthread_join das 4 threads, envia sentinela pra thread de log
-    sem_wait(&lq.sem_empty);
-    pthread_mutex_lock(&lq.mutex);
-    ItemLog fimLog = {0};
-    fimLog.ultimo = 1;
-    lq.buffer[lq.head] = fimLog;
-    lq.head = (lq.head + 1) % LOG_QUEUE_SIZE;
-    lq.count++;
-    pthread_mutex_unlock(&lq.mutex);
-    sem_post(&lq.sem_full);
-
-    pthread_join(tLog, NULL);
-
     // libera recursos
     pthread_mutex_destroy(&sb1.mutex);
     sem_destroy(&sb1.sem_empty);
@@ -102,15 +88,9 @@ int main(){
     sem_destroy(&sb2.sem_empty);
     sem_destroy(&sb2.sem_full);
 
-
-    // libera recursos da fila de log
-    pthread_mutex_destroy(&lq.mutex);
-    sem_destroy(&lq.sem_empty);
-    sem_destroy(&lq.sem_full);
-
     // merge dos resultados
-    ESTATISTICASCAXIAS estatisticasCaxiasFinal = calcularEstatisticasCaxias(argsProc1.estatisticasCaxias, argsProc2.estatisticasCaxias);
-    ESTATISTICASBENTO  estatisticasBentoFinal  = calcularEstatisticasBento(argsProc1.estatisticasBento,  argsProc2.estatisticasBento);
+    ESTATISTICASCAXIAS estatisticasCaxiasFinal = calcularEstatisticasCaxias(argsProc1.estatisticasCaxias, argsProc2.estatisticasCaxias, &lq);
+    ESTATISTICASBENTO  estatisticasBentoFinal  = calcularEstatisticasBento(argsProc1.estatisticasBento,  argsProc2.estatisticasBento, &lq);
 
    clock_gettime(CLOCK_MONOTONIC, &fim);
     float segundos = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
@@ -136,10 +116,31 @@ int main(){
         dataFimArquivo2,
         segundos,
         estatisticasCaxiasFinal,
-        estatisticasBentoFinal
+        estatisticasBentoFinal,
+        &lq
     };
+
     //Impressão dos dados na tela
     imprimirInformacoesNaTela(argsImprimirDados);
+
+    //Envia sentinela pra thread de log
+    sem_wait(&lq.sem_empty);
+    pthread_mutex_lock(&lq.mutex);
+    ItemLog fimLog = {0};
+    fimLog.ultimo = 1;
+    lq.buffer[lq.head] = fimLog;
+    lq.head = (lq.head + 1) % LOG_QUEUE_SIZE;
+    lq.count++;
+    pthread_mutex_unlock(&lq.mutex);
+    sem_post(&lq.sem_full);
+
+    pthread_join(tLog, NULL);
+
+    // libera recursos da fila de log
+    pthread_mutex_destroy(&lq.mutex);
+    sem_destroy(&lq.sem_empty);
+    sem_destroy(&lq.sem_full);
+
 
     return 0;
 }
