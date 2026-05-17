@@ -1,6 +1,7 @@
 #ifndef STRUCTS_H
 #define STRUTCS_H
 
+#define SIZE_DATAHORA_FULL 
 #define SIZE_DATAHORA 20
 #define SIZE_DATA 11
 #define NUMBER_SPREADING_FACTORS 6
@@ -43,6 +44,7 @@ typedef struct {
     int registros_lidos;
     int registros_processados;
     int leitura_concluida;
+    int registros_duplicados;
 } SharedBuffer;
 
 
@@ -158,14 +160,21 @@ typedef struct
 {
     char *arquivo1;
     int nItensArquivo1;
+    int ignoradosArquivo1;
     DATAHORA periodoInicioArquivo1;
     DATAHORA periodoFimArquivo1;
     char*arquivo2;
     int nItensArquivo2;
+    int ignoradosArquivo2;
     DATAHORA periodoInicioArquivo2;
     DATAHORA periodoFimArquivo2;
     float tempo;
     ESTATISTICASCAXIAS estatisticasCaxias;
     ESTATISTICASBENTO estatisticasBento;
 }ARGSIMPRIMIRDADOS;
+
+typedef struct {
+    char timestamp[30];
+    int payloadId;
+} ItemDeduplicacao;
 #endif

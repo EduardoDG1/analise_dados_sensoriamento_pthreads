@@ -24,7 +24,7 @@ int main(){
     // inicializa SharedBuffer 1
     SharedBuffer sb1;
     sb1.head = sb1.tail = sb1.count = 0;
-    sb1.registros_lidos = sb1.registros_processados = sb1.leitura_concluida = sb1.total_registros = 0;
+    sb1.registros_lidos = sb1.registros_processados = sb1.leitura_concluida = sb1.total_registros = sb1.registros_duplicados = 0;
     pthread_mutex_init(&sb1.mutex, NULL);
     sem_init(&sb1.sem_empty, 0, BUFFER_SIZE);
     sem_init(&sb1.sem_full,  0, 0);
@@ -32,7 +32,7 @@ int main(){
     // inicializa SharedBuffer 2
     SharedBuffer sb2;
     sb2.head = sb2.tail = sb2.count = 0;
-    sb2.registros_lidos = sb2.registros_processados = sb2.leitura_concluida = sb2.total_registros = 0;
+    sb2.registros_lidos = sb2.registros_processados = sb2.leitura_concluida = sb2.total_registros = sb2.registros_duplicados = 0;
     pthread_mutex_init(&sb2.mutex, NULL);
     sem_init(&sb2.sem_empty, 0, BUFFER_SIZE);
     sem_init(&sb2.sem_full,  0, 0);
@@ -126,10 +126,12 @@ int main(){
     ARGSIMPRIMIRDADOS argsImprimirDados = {
         "senzemo_cx_bg.json",
         argsProc1.estatisticasCaxias.numeroRegistros + argsProc1.estatisticasBento.numeroRegistros,
+        sb1.registros_duplicados,
         dataInicioArquivo1,
         dataFimArquivo1,
         "mqtt_senzemo_cx_bg.json",
         argsProc2.estatisticasCaxias.numeroRegistros + argsProc2.estatisticasBento.numeroRegistros,
+        sb2.registros_duplicados,
         dataInicioArquivo2,
         dataFimArquivo2,
         segundos,
