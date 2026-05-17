@@ -9,7 +9,7 @@
 gcc -pthread cJSON.c processData.c main.c -o saida
 ```
 
-# Execução
+### Execução
 
 ### Linux
 
