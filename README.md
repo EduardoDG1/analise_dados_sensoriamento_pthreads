@@ -14,19 +14,19 @@ gcc -pthread cJSON.c processData.c main.c -o saida
 ### Linux
 
 ```bash
-./programa
+./saida
 ```
 
 ### Windows
 
 CMD:
 ```cmd
-programa.exe
+saida.exe
 ```
 
 Powershell:
 ```powershell
-.\programa.exe
+.\saida.exe
 ```
 
 ---
