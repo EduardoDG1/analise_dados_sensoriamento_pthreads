@@ -1,6 +1,7 @@
 #ifndef STRUCTS_H
 #define STRUTCS_H
 
+#define SIZE_DATAHORA_FULL 
 #define SIZE_DATAHORA 20
 #define SIZE_DATA 11
 #define NUMBER_SPREADING_FACTORS 6
@@ -168,4 +169,9 @@ typedef struct
     ESTATISTICASCAXIAS estatisticasCaxias;
     ESTATISTICASBENTO estatisticasBento;
 }ARGSIMPRIMIRDADOS;
+
+typedef struct {
+    char timestamp[30];
+    int payloadId;
+} ItemDeduplicacao;
 #endif

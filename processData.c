@@ -8,35 +8,30 @@
 #include "processData.h"
 #include <pthread.h>   
 #include <semaphore.h> 
-
+#define JANELADUPLICACAO 10
 void *carregarJson(void *args)
 {
-    
     ARGSCARREGARJSON *parametros = (ARGSCARREGARJSON *)args;
     SharedBuffer *sb = parametros->shared;
 
-    //envia inicio pra thread de logs
     char msg[LOG_MSG_SIZE];
     snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Thread iniciada: %s", parametros->nomeArquivo);
     log_push(parametros->lq, msg);
 
     FILE *f = fopen(parametros->nomeArquivo, "rb");
-
-    if(!f)
+    if (!f)
     {
         printf("Erro ao abrir arquivo!\n");
         exit(EXIT_FAILURE);
     }
 
-    fseek(f,0,SEEK_END);
+    fseek(f, 0, SEEK_END);
     long tamanhoArquivo = ftell(f);
-    fseek(f,0,SEEK_SET);
+    fseek(f, 0, SEEK_SET);
 
-    char *buffer = (char *)malloc(tamanhoArquivo+1);
-    
+    char *buffer = (char *)malloc(tamanhoArquivo + 1);
     fread(buffer, 1, tamanhoArquivo, f);
     buffer[tamanhoArquivo] = '\0';
-
     fclose(f);
 
     cJSON *array = cJSON_Parse(buffer);
@@ -46,15 +41,23 @@ void *carregarJson(void *args)
     sb->total_registros = cJSON_GetArraySize(array);
     pthread_mutex_unlock(&sb->mutex);
 
+    // janela deslizante de deduplicação
+    ItemDeduplicacao janela[JANELADUPLICACAO];
+    memset(janela, 0, sizeof(janela));
+    int nTimestamps = 0;
+
     cJSON *item = NULL;
-    cJSON_ArrayForEach(item, array){
+    
+    int posicao = 0;
+
+    cJSON_ArrayForEach(item, array)
+    {
+        posicao++;
         ItemBuffer entry;
         entry.ultimo = 0;
 
-        //a ideia é funcionar pros 2 formatos de arquivo
         cJSON *payloadNode = cJSON_GetObjectItem(item, "brute_data");
-        if(!payloadNode) payloadNode = cJSON_GetObjectItem(item, "payload");
-
+        if (!payloadNode) payloadNode = cJSON_GetObjectItem(item, "payload");
         if (!payloadNode) { printf("campo payload nao encontrado\n"); exit(1); }
 
         entry.payloadStr = strdup(payloadNode->valuestring);
@@ -64,14 +67,59 @@ void *carregarJson(void *args)
         sscanf(dateNode->valuestring, "%[^T]", entry.payloadDate);
         entry.payloadDate[SIZE_DATA - 1] = '\0';
 
+        // extrai o payload_id do item raiz
+        cJSON *payloadIdNode = cJSON_GetObjectItem(item, "payload_id");
+        int payloadId = payloadIdNode ? payloadIdNode->valueint : -1;
+
+        // extrai timestamp do primeiro dado pra deduplicação
+        char timestamp[30] = {0};
+        cJSON *payloadTemp = cJSON_Parse(payloadNode->valuestring);
+        if (payloadTemp)
+        {
+            cJSON *primeiroDado = cJSON_GetArrayItem(cJSON_GetObjectItem(payloadTemp, "data"), 0);
+            if (primeiroDado)
+            {
+                cJSON *timeNode = cJSON_GetObjectItem(primeiroDado, "time");
+                if (timeNode)
+                    strncpy(timestamp, timeNode->valuestring, 29);
+            }
+            cJSON_Delete(payloadTemp);
+        }
+
+        bool duplicata = false;
+        int i;
+        for (i = 0; i < nTimestamps && i < JANELADUPLICACAO; i++)
+        {           
+            if (!strcmp(timestamp, janela[i].timestamp))
+            {
+                
+                duplicata = true;
+                snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Registro duplicado ignorado - payload_id: %d é duplicado de payload_id: %d",
+                    payloadId, janela[i].payloadId);
+                log_push(parametros->lq, msg);
+                break;
+            }
+        }
+
+        if (duplicata)
+        {
+            free(entry.payloadStr);
+            continue;
+        }
+
+        // registra na janela deslizante
+        strncpy(janela[nTimestamps % JANELADUPLICACAO].timestamp, timestamp, 29);
+        janela[nTimestamps % JANELADUPLICACAO].payloadId = payloadId;
+        nTimestamps++;
+
         sem_wait(&sb->sem_empty);
         pthread_mutex_lock(&sb->mutex);
         sb->buffer[sb->head] = entry;
         sb->head = (sb->head + 1) % BUFFER_SIZE;
         sb->count++;
         sb->registros_lidos++;
-        // progresso enviado pros logs
-        if (sb->registros_lidos % 100 == 0) {
+        if (sb->registros_lidos % 100 == 0)
+        {
             snprintf(msg, LOG_MSG_SIZE, "[LEITORA] %s - %d/%d registros lidos",
                 parametros->nomeArquivo, sb->registros_lidos, sb->total_registros);
             log_push(parametros->lq, msg);
@@ -80,10 +128,9 @@ void *carregarJson(void *args)
         sem_post(&sb->sem_full);
     }
 
-    //avisa que acabou 
+    // sentinela
     ItemBuffer fim = {0};
     fim.ultimo = 1;
-
     sem_wait(&sb->sem_empty);
     pthread_mutex_lock(&sb->mutex);
     sb->buffer[sb->head] = fim;
@@ -94,15 +141,12 @@ void *carregarJson(void *args)
     sem_post(&sb->sem_full);
 
     cJSON_Delete(array);
-    
-     snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Thread finalizada: %s - %d registros lidos",
+
+    snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Thread finalizada: %s - %d registros lidos",
         parametros->nomeArquivo, sb->registros_lidos);
-    log_push(parametros->lq, msg);  // precisa estar ANTES do return
+    log_push(parametros->lq, msg);
 
     return NULL;
-
-
-    
 }
 
 void *processarJson(void *args)
