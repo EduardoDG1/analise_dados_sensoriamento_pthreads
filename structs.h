@@ -44,6 +44,7 @@ typedef struct {
     int registros_lidos;
     int registros_processados;
     int leitura_concluida;
+    int registros_duplicados;
 } SharedBuffer;
 
 
@@ -159,10 +160,12 @@ typedef struct
 {
     char *arquivo1;
     int nItensArquivo1;
+    int ignoradosArquivo1;
     DATAHORA periodoInicioArquivo1;
     DATAHORA periodoFimArquivo1;
     char*arquivo2;
     int nItensArquivo2;
+    int ignoradosArquivo2;
     DATAHORA periodoInicioArquivo2;
     DATAHORA periodoFimArquivo2;
     float tempo;

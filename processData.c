@@ -9,6 +9,7 @@
 #include <pthread.h>   
 #include <semaphore.h> 
 #define JANELADUPLICACAO 10
+
 void *carregarJson(void *args)
 {
     ARGSCARREGARJSON *parametros = (ARGSCARREGARJSON *)args;
@@ -103,6 +104,9 @@ void *carregarJson(void *args)
 
         if (duplicata)
         {
+            pthread_mutex_lock(&sb->mutex);
+            sb->registros_duplicados++;
+            pthread_mutex_unlock(&sb->mutex);
             free(entry.payloadStr);
             continue;
         }
@@ -143,7 +147,7 @@ void *carregarJson(void *args)
     cJSON_Delete(array);
 
     snprintf(msg, LOG_MSG_SIZE, "[LEITORA] Thread finalizada: %s - %d registros lidos",
-        parametros->nomeArquivo, sb->registros_lidos);
+        parametros->nomeArquivo, sb->registros_lidos + sb->registros_duplicados);
     log_push(parametros->lq, msg);
 
     return NULL;
@@ -811,9 +815,12 @@ void imprimirInformacoesNaTela(ARGSIMPRIMIRDADOS argsImprimirDados){
     printf("============================================================\n\n");
     printf("Arquivo analisado: %s\n", argsImprimirDados.arquivo1);
     printf("Total de registros processados: %d\n", argsImprimirDados.nItensArquivo1);
+    printf("Registros ignorados por duplicidade: %d\n", argsImprimirDados.ignoradosArquivo1);
+
     printf("Período analisado: %02d/%02d/%d a %02d/%02d/%d\n\n",argsImprimirDados.periodoInicioArquivo1.dia,argsImprimirDados.periodoInicioArquivo1.mes,argsImprimirDados.periodoInicioArquivo1.ano, argsImprimirDados.periodoFimArquivo1.dia,argsImprimirDados.periodoFimArquivo1.mes,argsImprimirDados.periodoFimArquivo1.ano);
     printf("Arquivo analisado: %s\n",argsImprimirDados.arquivo2);
     printf("Total de registros processados: %d\n", argsImprimirDados.nItensArquivo2);
+    printf("Registros ignorados por duplicidade: %d\n", argsImprimirDados.ignoradosArquivo2);
     printf("Período analisado: %02d/%02d/%d a %02d/%02d/%d\n\n", argsImprimirDados.periodoInicioArquivo2.dia,argsImprimirDados.periodoInicioArquivo2.mes,argsImprimirDados.periodoInicioArquivo2.ano, argsImprimirDados.periodoFimArquivo2.dia,argsImprimirDados.periodoFimArquivo2.mes,argsImprimirDados.periodoFimArquivo2.ano);
     printf("------------------------------------------------------------\n");
     printf("TEMPERATURA (°C)\n");
