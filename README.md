@@ -4,7 +4,7 @@
 ## Instruções de execução
 
 ### Compilação manual
-
+No diretório do projeto execute: 
 ```bash
 gcc -pthread cJSON.c processData.c main.c -o saida
 ```
